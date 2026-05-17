@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AEA",
+    "EUE",
+    "AEA"
+  ],
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "E": "minecraft:ender_pearl",
+    "U": "ascensioncores:upgrade_core"
+  },
+  "result": {
+    "id": "ascensioncores:chaos_core",
+    "count": 1
+  }
+}

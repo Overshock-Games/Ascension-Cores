@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ACA",
+    "CFC",
+    "ACA"
+  ],
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "C": "minecraft:copper_ingot",
+    "F": "minecraft:flint"
+  },
+  "result": {
+    "id": "ascensioncores:upgrade_core",
+    "count": 1
+  }
+}
