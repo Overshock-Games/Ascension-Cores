@@ -31,9 +31,9 @@ public final class AscensionCoresConfig {
     public static int mobAscensionCoreMinDrop = 1;
     public static int mobAscensionCoreMaxDrop = 2;
 
-    public static double levelCoreChestChance = 0.50;
-    public static int levelCoreChestMinDrop = 2;
-    public static int levelCoreChestMaxDrop = 4;
+    public static double chestAscensionCoreChance = 0.50;
+    public static int chestAscensionCoreMinDrop = 2;
+    public static int chestAscensionCoreMaxDrop = 4;
     public static double treasureAscensionCoreChance = 0.50;
     public static double ancientCityAscensionCoreChance = 0.40;
     public static double ancientCityChaosCoreChance = 0.20;
@@ -82,9 +82,12 @@ public final class AscensionCoresConfig {
         mobAscensionCoreMinDrop = parseInt(props, "mobAscensionCoreMinDrop", mobAscensionCoreMinDrop, 1, 64, logger);
         mobAscensionCoreMaxDrop = parseInt(props, "mobAscensionCoreMaxDrop", mobAscensionCoreMaxDrop, mobAscensionCoreMinDrop, 64, logger);
 
-        levelCoreChestChance = parseDouble(props, "levelCoreChestChance", levelCoreChestChance, 0.0, 1.0, logger);
-        levelCoreChestMinDrop = parseInt(props, "levelCoreChestMinDrop", levelCoreChestMinDrop, 1, 64, logger);
-        levelCoreChestMaxDrop = parseInt(props, "levelCoreChestMaxDrop", levelCoreChestMaxDrop, levelCoreChestMinDrop, 64, logger);
+        chestAscensionCoreChance = parseDouble(props, "chestAscensionCoreChance", 
+            parseDouble(props, "levelCoreChestChance", chestAscensionCoreChance, 0.0, 1.0, logger), 0.0, 1.0, logger);
+        chestAscensionCoreMinDrop = parseInt(props, "chestAscensionCoreMinDrop", 
+            parseInt(props, "levelCoreChestMinDrop", chestAscensionCoreMinDrop, 1, 64, logger), 1, 64, logger);
+        chestAscensionCoreMaxDrop = parseInt(props, "chestAscensionCoreMaxDrop", 
+            parseInt(props, "levelCoreChestMaxDrop", chestAscensionCoreMaxDrop, chestAscensionCoreMinDrop, 64, logger), chestAscensionCoreMinDrop, 64, logger);
         treasureAscensionCoreChance = parseDouble(props, "treasureAscensionCoreChance", treasureAscensionCoreChance, 0.0, 1.0, logger);
         ancientCityAscensionCoreChance = parseDouble(props, "ancientCityAscensionCoreChance", ancientCityAscensionCoreChance, 0.0, 1.0, logger);
         ancientCityChaosCoreChance = parseDouble(props, "ancientCityChaosCoreChance", ancientCityChaosCoreChance, 0.0, 1.0, logger);
@@ -115,7 +118,7 @@ public final class AscensionCoresConfig {
     /** Live config lookup used by AscensionConfigChanceCondition (chest loot rates). */
     public static double getChance(String key) {
         return switch (key) {
-            case "levelCoreChestChance" -> levelCoreChestChance;
+            case "chestAscensionCoreChance" -> chestAscensionCoreChance;
             case "treasureAscensionCoreChance" -> treasureAscensionCoreChance;
             case "ancientCityAscensionCoreChance" -> ancientCityAscensionCoreChance;
             case "treasureChaosCoreChance" -> treasureChaosCoreChance;
@@ -197,10 +200,10 @@ public final class AscensionCoresConfig {
                 # ── Chest loot ────────────────────────────────────────────────────
                 # Chance per generated chest (dungeons, mineshafts, strongholds, temples,
                 # shipwrecks, trial chambers, etc.) to contain Ascension Cores.
-                levelCoreChestChance=%.4f
+                chestAscensionCoreChance=%.4f
                 # When a chest rolls cores, how many drop (uniform between min and max).
-                levelCoreChestMinDrop=%d
-                levelCoreChestMaxDrop=%d
+                chestAscensionCoreMinDrop=%d
+                chestAscensionCoreMaxDrop=%d
                 # Chance for Ascension Cores in Bastion Treasure and End City Treasure chests
                 # (these chests use mobAscensionCoreMin/MaxDrop for the count).
                 treasureAscensionCoreChance=%.4f
@@ -251,9 +254,9 @@ public final class AscensionCoresConfig {
                     mobChaosCoreDropChance,
                     mobAscensionCoreMinDrop,
                     mobAscensionCoreMaxDrop,
-                    levelCoreChestChance,
-                    levelCoreChestMinDrop,
-                    levelCoreChestMaxDrop,
+                    chestAscensionCoreChance,
+                    chestAscensionCoreMinDrop,
+                    chestAscensionCoreMaxDrop,
                     treasureAscensionCoreChance,
                     ancientCityAscensionCoreChance,
                     ancientCityChaosCoreChance,

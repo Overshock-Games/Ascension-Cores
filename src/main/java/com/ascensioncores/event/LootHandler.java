@@ -18,7 +18,7 @@ import java.util.Set;
 
 public final class LootHandler {
 
-    private static final Set<ResourceKey<LootTable>> LEVEL_CORE_CHEST_TABLES = Set.of(
+    private static final Set<ResourceKey<LootTable>> NORMAL_CHEST_TABLES = Set.of(
         BuiltInLootTables.SPAWN_BONUS_CHEST,
         BuiltInLootTables.SIMPLE_DUNGEON,
         BuiltInLootTables.ABANDONED_MINESHAFT,
@@ -64,10 +64,10 @@ public final class LootHandler {
         registered = true;
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
 
-            if (LEVEL_CORE_CHEST_TABLES.contains(key)) {
-                addAscensionCorePool(tableBuilder, "levelCoreChestChance",
-                    AscensionCoresConfig.levelCoreChestMinDrop,
-                    AscensionCoresConfig.levelCoreChestMaxDrop);
+            if (NORMAL_CHEST_TABLES.contains(key)) {
+                addAscensionCorePool(tableBuilder, "chestAscensionCoreChance",
+                    AscensionCoresConfig.chestAscensionCoreMinDrop,
+                    AscensionCoresConfig.chestAscensionCoreMaxDrop);
             }
 
             if (key.equals(BuiltInLootTables.BASTION_TREASURE)
