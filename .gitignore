@@ -34,3 +34,6 @@ eula.txt
 # OS Generated
 .DS_Store
 Thumbs.db
+
+# Temporary files
+tmp/
