@@ -7,7 +7,9 @@ import com.ascensioncores.gear.RolledStat;
 import com.ascensioncores.gear.StatPool;
 import com.ascensioncores.item.ModItems;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -47,6 +49,18 @@ public final class AscensionCoresCommand {
                 .executes(context -> showInfo(context.getSource())))
             .then(Commands.literal("reroll")
                 .executes(context -> reroll(context.getSource())))
+            .then(Commands.literal("trait")
+                .then(Commands.literal("set")
+                    .then(Commands.argument("id", StringArgumentType.word())
+                        .executes(context -> forceTrait(
+                            context.getSource(),
+                            StringArgumentType.getString(context, "id"),
+                            -1.0))
+                        .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0.0))
+                            .executes(context -> forceTrait(
+                                context.getSource(),
+                                StringArgumentType.getString(context, "id"),
+                                DoubleArgumentType.getDouble(context, "amount")))))))
             .then(Commands.literal("givecore")
                 .then(Commands.literal("upgrade")
                     .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
@@ -137,6 +151,43 @@ public final class AscensionCoresCommand {
         }
         source.sendSuccess(() -> Component.literal("Gave " + count + " " + name + "."), true);
         return count;
+    }
+
+    private static int forceTrait(CommandSourceStack source, String id, double amount) throws CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        ItemStack stack = selectedGear(player);
+
+        StatPool.StatDef def = StatPool.getById(id);
+        if (def == null) {
+            // also search ranged pool since getById only checks weapon/armor/tool
+            def = GearHelper.getPool(stack).stream()
+                .filter(d -> d.id().equals(id)).findFirst().orElse(null);
+        }
+        if (def == null) {
+            source.sendFailure(Component.literal("Unknown trait id: " + id));
+            return 0;
+        }
+
+        double baseAmount = amount > 0 ? amount : (def.minAmount() + def.maxAmount()) / 2.0;
+        baseAmount = Math.round(baseAmount * 100.0) / 100.0;
+
+        List<RolledStat> stats = new java.util.ArrayList<>(GearHelper.getRolledStats(stack));
+        stats.removeIf(s -> s.id().equals(id)); // remove existing if any
+        stats.add(new RolledStat(id, baseAmount));
+
+        int level = GearHelper.getLevel(stack);
+        if (level == 0) {
+            GearHelper.setLevel(stack, 1);
+            level = 1;
+        }
+
+        stack.set(com.ascensioncores.component.ModComponents.ROLLED_STATS, stats);
+        GearHelper.rebuildAttributes(stack, level, stats);
+        player.containerMenu.broadcastChanges();
+
+        final String msg = "Set trait " + def.displayName() + " (base=" + baseAmount + ") on held item.";
+        source.sendSuccess(() -> Component.literal(msg).withStyle(ChatFormatting.GREEN), false);
+        return 1;
     }
 
     private static ItemStack selectedGear(ServerPlayer player) throws CommandSyntaxException {
