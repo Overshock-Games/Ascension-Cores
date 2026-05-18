@@ -102,7 +102,8 @@ public final class TooltipHandler {
             case 1 -> "Honed";
             case 2 -> "Empowered";
             case 3 -> "Ascendant";
-            default -> "Mythic";
+            case 4 -> "Mythic";
+            default -> "Divine";
         };
     }
 
@@ -112,7 +113,8 @@ public final class TooltipHandler {
             case 1 -> 0xFFFFFF;
             case 2 -> 0x55FFFF;
             case 3 -> 0xFF55FF;
-            default -> 0xFFAA00;
+            case 4 -> 0xFFAA00;
+            default -> 0xFF5555;
         };
     }
 }

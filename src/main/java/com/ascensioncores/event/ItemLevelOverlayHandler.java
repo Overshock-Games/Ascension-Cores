@@ -36,7 +36,8 @@ public final class ItemLevelOverlayHandler {
             case 1 -> 0xE6FFFFFF;
             case 2 -> 0xE655FFFF;
             case 3 -> 0xE6FF55FF;
-            default -> 0xE6FFAA00;
+            case 4 -> 0xE6FFAA00;
+            default -> 0xE6FF5555;
         };
     }
 

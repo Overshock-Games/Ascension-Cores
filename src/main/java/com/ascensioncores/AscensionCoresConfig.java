@@ -12,8 +12,12 @@ import java.util.Properties;
 
 public final class AscensionCoresConfig {
 
-    public static int maxLevel = 4;
-    public static int baseAscensionCoreCost = 4;
+    public static int maxLevel = 5;
+    public static int upgradeCoreCostLevel1 = 1;
+    public static int upgradeCoreCostLevel2 = 4;
+    public static int upgradeCoreCostLevel3 = 16;
+    public static int upgradeCoreCostLevel4 = 32;
+    public static int upgradeCoreCostLevel5 = 64;
     public static boolean showInventoryLevelMarkers = true;
     public static boolean playAnvilFeedback = true;
     public static boolean enableBetterVanillaMobsIntegration = true;
@@ -21,21 +25,22 @@ public final class AscensionCoresConfig {
     public static int upgradeXpCostLevel2 = 4;
     public static int upgradeXpCostLevel3 = 6;
     public static int upgradeXpCostLevel4 = 8;
+    public static int upgradeXpCostLevel5 = 10;
 
-    public static double mobAscensionCoreDropChancePerEquipment = 0.02;
-    public static double mobChaosCoreDropChance = 0.006;
+    public static double mobAscensionCoreDropChancePerEquipment = 0.015;
+    public static double mobChaosCoreDropChance = 0.004;
     public static int mobAscensionCoreMinDrop = 1;
     public static int mobAscensionCoreMaxDrop = 2;
-    public static double betterVanillaMobsAscensionCoreDropChance = 0.04;
-    public static double betterVanillaMobsAscensionCoreDropChancePerStar = 0.04;
+    public static double betterVanillaMobsAscensionCoreDropChance = 0.03;
+    public static double betterVanillaMobsAscensionCoreDropChancePerStar = 0.03;
     public static double betterVanillaMobsChaosCoreDropChance = 0.01;
     public static double betterVanillaMobsChaosCoreDropChancePerStar = 0.01;
 
-    public static double levelCoreChestChance = 0.60;
+    public static double levelCoreChestChance = 0.50;
     public static int levelCoreChestMinDrop = 2;
     public static int levelCoreChestMaxDrop = 4;
-    public static double treasureAscensionCoreChance = 0.60;
-    public static double ancientCityAscensionCoreChance = 0.50;
+    public static double treasureAscensionCoreChance = 0.50;
+    public static double ancientCityAscensionCoreChance = 0.40;
     public static double ancientCityChaosCoreChance = 0.20;
     public static double treasureChaosCoreChance = 0.10;
     public static double unenchantedLootAscensionChance = 0.05;
@@ -56,8 +61,13 @@ public final class AscensionCoresConfig {
             }
         }
 
-        maxLevel = parseInt(props, "maxLevel", maxLevel, 1, 4, logger);
-        baseAscensionCoreCost = parseInt(props, "baseAscensionCoreCost", baseAscensionCoreCost, 1, 64, logger);
+        maxLevel = parseInt(props, "maxLevel", maxLevel, 1, 10, logger);
+        upgradeCoreCostLevel1 = parseInt(props, "upgradeCoreCostLevel1", upgradeCoreCostLevel1, 1, 64, logger);
+        upgradeCoreCostLevel2 = parseInt(props, "upgradeCoreCostLevel2", upgradeCoreCostLevel2, 1, 64, logger);
+        upgradeCoreCostLevel3 = parseInt(props, "upgradeCoreCostLevel3", upgradeCoreCostLevel3, 1, 64, logger);
+        upgradeCoreCostLevel4 = parseInt(props, "upgradeCoreCostLevel4", upgradeCoreCostLevel4, 1, 64, logger);
+        upgradeCoreCostLevel5 = parseInt(props, "upgradeCoreCostLevel5", upgradeCoreCostLevel5, 1, 64, logger);
+
         showInventoryLevelMarkers = parseBoolean(props, "showInventoryLevelMarkers", showInventoryLevelMarkers, logger);
         playAnvilFeedback = parseBoolean(props, "playAnvilFeedback", playAnvilFeedback, logger);
         enableBetterVanillaMobsIntegration = parseBoolean(props, "enableBetterVanillaMobsIntegration", enableBetterVanillaMobsIntegration, logger);
@@ -65,6 +75,7 @@ public final class AscensionCoresConfig {
         upgradeXpCostLevel2 = parseInt(props, "upgradeXpCostLevel2", upgradeXpCostLevel2, 0, 1000, logger);
         upgradeXpCostLevel3 = parseInt(props, "upgradeXpCostLevel3", upgradeXpCostLevel3, 0, 1000, logger);
         upgradeXpCostLevel4 = parseInt(props, "upgradeXpCostLevel4", upgradeXpCostLevel4, 0, 1000, logger);
+        upgradeXpCostLevel5 = parseInt(props, "upgradeXpCostLevel5", upgradeXpCostLevel5, 0, 1000, logger);
 
         mobAscensionCoreDropChancePerEquipment = parseDouble(props, "mobAscensionCoreDropChancePerEquipment", mobAscensionCoreDropChancePerEquipment, 0.0, 1.0, logger);
         mobChaosCoreDropChance = parseDouble(props, "mobChaosCoreDropChance", mobChaosCoreDropChance, 0.0, 1.0, logger);
@@ -110,12 +121,23 @@ public final class AscensionCoresConfig {
         };
     }
 
+    public static int getUpgradeCoreCost(int currentLevel) {
+        return switch (currentLevel) {
+            case 0 -> upgradeCoreCostLevel1;
+            case 1 -> upgradeCoreCostLevel2;
+            case 2 -> upgradeCoreCostLevel3;
+            case 3 -> upgradeCoreCostLevel4;
+            default -> upgradeCoreCostLevel5;
+        };
+    }
+
     public static int getUpgradeXpCost(int currentLevel) {
         return switch (currentLevel) {
             case 0 -> upgradeXpCostLevel1;
             case 1 -> upgradeXpCostLevel2;
             case 2 -> upgradeXpCostLevel3;
-            default -> upgradeXpCostLevel4;
+            case 3 -> upgradeXpCostLevel4;
+            default -> upgradeXpCostLevel5;
         };
     }
 
@@ -134,14 +156,18 @@ public final class AscensionCoresConfig {
                 # Changes take effect after /ascensioncores reload or server restart.
 
                 # ── Core gameplay ─────────────────────────────────────────────────
-                # Max ascension level any gear can reach (1-4). Tooltip caps and the
+                # Max ascension level any gear can reach (1-5). Tooltip caps and the
                 # number of rolled stats scale with this.
                 maxLevel=%d
-                # Base used in the per-level core cost formula: cost = base^level.
-                # Default 4 means: L0->L1 costs 1, L1->L2 costs 4, L2->L3 costs 16, L3->L4 costs 64.
-                baseAscensionCoreCost=%d
+                # Ascension Cores required for each upgrade level.
+                # Level 1 means L0->L1, Level 2 means L1->L2, etc.
+                upgradeCoreCostLevel1=%d
+                upgradeCoreCostLevel2=%d
+                upgradeCoreCostLevel3=%d
+                upgradeCoreCostLevel4=%d
+                upgradeCoreCostLevel5=%d
                 # If true, leveled gear shows colored corner brackets in the inventory grid:
-                # one bracket per ascension level, color-coded by tier (white/cyan/magenta/gold).
+                # one bracket per ascension level, color-coded by tier.
                 showInventoryLevelMarkers=%s
                 # If true, anvil upgrade/reroll plays an audio cue on success.
                 playAnvilFeedback=%s
@@ -154,6 +180,7 @@ public final class AscensionCoresConfig {
                 upgradeXpCostLevel2=%d
                 upgradeXpCostLevel3=%d
                 upgradeXpCostLevel4=%d
+                upgradeXpCostLevel5=%d
 
                 # ── Mob drops ─────────────────────────────────────────────────────
                 # Chance per piece of gear (armor or weapon) a hostile mob has equipped to drop Ascension Cores.
@@ -201,7 +228,11 @@ public final class AscensionCoresConfig {
                 treasureUnenchantedLootAscensionChance=%.4f
                 """.formatted(
                     maxLevel,
-                    baseAscensionCoreCost,
+                    upgradeCoreCostLevel1,
+                    upgradeCoreCostLevel2,
+                    upgradeCoreCostLevel3,
+                    upgradeCoreCostLevel4,
+                    upgradeCoreCostLevel5,
                     showInventoryLevelMarkers,
                     playAnvilFeedback,
                     enableBetterVanillaMobsIntegration,
@@ -209,6 +240,7 @@ public final class AscensionCoresConfig {
                     upgradeXpCostLevel2,
                     upgradeXpCostLevel3,
                     upgradeXpCostLevel4,
+                    upgradeXpCostLevel5,
                     mobAscensionCoreDropChancePerEquipment,
                     mobChaosCoreDropChance,
                     mobAscensionCoreMinDrop,

@@ -163,8 +163,7 @@ public final class GearHelper {
     }
 
     public static int getAscensionCoreCost(int currentLevel) {
-        if (currentLevel <= 0) return 1;
-        return (int) Math.pow(AscensionCoresConfig.baseAscensionCoreCost, currentLevel);
+        return AscensionCoresConfig.getUpgradeCoreCost(currentLevel);
     }
 
     // ── Attribute building ──────────────────────────────────────────────────
