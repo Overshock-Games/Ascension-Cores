@@ -20,7 +20,6 @@ public final class AscensionCoresConfig {
     public static int upgradeCoreCostLevel5 = 64;
     public static boolean showInventoryLevelMarkers = true;
     public static boolean playAnvilFeedback = true;
-    public static boolean enableBetterVanillaMobsIntegration = true;
     public static int upgradeXpCostLevel1 = 2;
     public static int upgradeXpCostLevel2 = 4;
     public static int upgradeXpCostLevel3 = 6;
@@ -31,10 +30,6 @@ public final class AscensionCoresConfig {
     public static double mobChaosCoreDropChance = 0.004;
     public static int mobAscensionCoreMinDrop = 1;
     public static int mobAscensionCoreMaxDrop = 2;
-    public static double betterVanillaMobsAscensionCoreDropChance = 0.03;
-    public static double betterVanillaMobsAscensionCoreDropChancePerStar = 0.03;
-    public static double betterVanillaMobsChaosCoreDropChance = 0.01;
-    public static double betterVanillaMobsChaosCoreDropChancePerStar = 0.01;
 
     public static double levelCoreChestChance = 0.50;
     public static int levelCoreChestMinDrop = 2;
@@ -45,6 +40,12 @@ public final class AscensionCoresConfig {
     public static double treasureChaosCoreChance = 0.10;
     public static double randomLootAscensionChance = 0.50;
     public static double treasureRandomLootAscensionChance = 0.75;
+
+    public static boolean enableBetterVanillaMobsIntegration = true;
+    public static double betterVanillaMobsAscensionCoreDropChance = 0.03;
+    public static double betterVanillaMobsAscensionCoreDropChancePerStar = 0.03;
+    public static double betterVanillaMobsChaosCoreDropChance = 0.01;
+    public static double betterVanillaMobsChaosCoreDropChancePerStar = 0.01;
 
     private static final Path CONFIG_PATH = Path.of("config", "ascensioncores.properties");
 
@@ -70,7 +71,6 @@ public final class AscensionCoresConfig {
 
         showInventoryLevelMarkers = parseBoolean(props, "showInventoryLevelMarkers", showInventoryLevelMarkers, logger);
         playAnvilFeedback = parseBoolean(props, "playAnvilFeedback", playAnvilFeedback, logger);
-        enableBetterVanillaMobsIntegration = parseBoolean(props, "enableBetterVanillaMobsIntegration", enableBetterVanillaMobsIntegration, logger);
         upgradeXpCostLevel1 = parseInt(props, "upgradeXpCostLevel1", upgradeXpCostLevel1, 0, 1000, logger);
         upgradeXpCostLevel2 = parseInt(props, "upgradeXpCostLevel2", upgradeXpCostLevel2, 0, 1000, logger);
         upgradeXpCostLevel3 = parseInt(props, "upgradeXpCostLevel3", upgradeXpCostLevel3, 0, 1000, logger);
@@ -81,12 +81,6 @@ public final class AscensionCoresConfig {
         mobChaosCoreDropChance = parseDouble(props, "mobChaosCoreDropChance", mobChaosCoreDropChance, 0.0, 1.0, logger);
         mobAscensionCoreMinDrop = parseInt(props, "mobAscensionCoreMinDrop", mobAscensionCoreMinDrop, 1, 64, logger);
         mobAscensionCoreMaxDrop = parseInt(props, "mobAscensionCoreMaxDrop", mobAscensionCoreMaxDrop, mobAscensionCoreMinDrop, 64, logger);
-        betterVanillaMobsAscensionCoreDropChance = parseDouble(props, "betterVanillaMobsAscensionCoreDropChance", betterVanillaMobsAscensionCoreDropChance, 0.0, 1.0, logger);
-        betterVanillaMobsAscensionCoreDropChancePerStar = parseDouble(props, "betterVanillaMobsAscensionCoreDropChancePerStar",
-            betterVanillaMobsAscensionCoreDropChancePerStar, 0.0, 1.0, logger);
-        betterVanillaMobsChaosCoreDropChance = parseDouble(props, "betterVanillaMobsChaosCoreDropChance", betterVanillaMobsChaosCoreDropChance, 0.0, 1.0, logger);
-        betterVanillaMobsChaosCoreDropChancePerStar = parseDouble(props, "betterVanillaMobsChaosCoreDropChancePerStar",
-            betterVanillaMobsChaosCoreDropChancePerStar, 0.0, 1.0, logger);
 
         levelCoreChestChance = parseDouble(props, "levelCoreChestChance", levelCoreChestChance, 0.0, 1.0, logger);
         levelCoreChestMinDrop = parseInt(props, "levelCoreChestMinDrop", levelCoreChestMinDrop, 1, 64, logger);
@@ -99,6 +93,15 @@ public final class AscensionCoresConfig {
             parseDouble(props, "unenchantedLootAscensionChance", randomLootAscensionChance, 0.0, 1.0, logger), 0.0, 1.0, logger);
         treasureRandomLootAscensionChance = parseDouble(props, "treasureRandomLootAscensionChance", 
             parseDouble(props, "treasureUnenchantedLootAscensionChance", treasureRandomLootAscensionChance, 0.0, 1.0, logger), 0.0, 1.0, logger);
+
+        enableBetterVanillaMobsIntegration = parseBoolean(props, "enableBetterVanillaMobsIntegration", enableBetterVanillaMobsIntegration, logger);
+        betterVanillaMobsAscensionCoreDropChance = parseDouble(props, "betterVanillaMobsAscensionCoreDropChance", betterVanillaMobsAscensionCoreDropChance, 0.0, 1.0, logger);
+        betterVanillaMobsAscensionCoreDropChancePerStar = parseDouble(props, "betterVanillaMobsAscensionCoreDropChancePerStar",
+            betterVanillaMobsAscensionCoreDropChancePerStar, 0.0, 1.0, logger);
+        betterVanillaMobsChaosCoreDropChance = parseDouble(props, "betterVanillaMobsChaosCoreDropChance", betterVanillaMobsChaosCoreDropChance, 0.0, 1.0, logger);
+        betterVanillaMobsChaosCoreDropChancePerStar = parseDouble(props, "betterVanillaMobsChaosCoreDropChancePerStar",
+            betterVanillaMobsChaosCoreDropChancePerStar, 0.0, 1.0, logger);
+
         StatPool.refresh();
 
         save(logger);
@@ -173,9 +176,6 @@ public final class AscensionCoresConfig {
                 showInventoryLevelMarkers=%s
                 # If true, anvil upgrade/reroll plays an audio cue on success.
                 playAnvilFeedback=%s
-                # If true, BetterVanillaMobs "touched" mobs get the special
-                # rarity-scaled drop rates below instead of the generic mob rates.
-                enableBetterVanillaMobsIntegration=%s
                 # XP levels charged by the anvil for each Ascension upgrade.
                 # Level 1 means L0->L1, Level 2 means L1->L2, etc.
                 upgradeXpCostLevel1=%d
@@ -193,19 +193,6 @@ public final class AscensionCoresConfig {
                 # When a mob drops Ascension Cores, how many drop (uniform between min and max).
                 mobAscensionCoreMinDrop=%d
                 mobAscensionCoreMaxDrop=%d
-                # BVM-only override: Ascension Core chance for a 1-star touched mob.
-                # 2-5 star mobs add the per-star value below for each extra star.
-                # Formula: chance = base + ((stars - 1) * perStar).
-                betterVanillaMobsAscensionCoreDropChance=%.4f
-                # Added to the Ascension Core chance for each BVM rarity star after the first.
-                # Default: 1-star 4%%, 2-star 5.5%%, 3-star 7%%, 4-star 8.5%%, 5-star/Alpha 10%%.
-                betterVanillaMobsAscensionCoreDropChancePerStar=%.4f
-                # BVM-only override: Chaos Core chance for a 1-star touched mob.
-                # Replaces mobChaosCoreDropChance for BVM mobs.
-                betterVanillaMobsChaosCoreDropChance=%.4f
-                # Added to the Chaos Core chance for each BVM rarity star after the first.
-                # Default: 1-star 0.3%%, 2-star 0.6%%, 3-star 0.9%%, 4-star 1.2%%, 5-star/Alpha 1.5%%.
-                betterVanillaMobsChaosCoreDropChancePerStar=%.4f
 
                 # ── Chest loot ────────────────────────────────────────────────────
                 # Chance per generated chest (dungeons, mineshafts, strongholds, temples,
@@ -228,6 +215,24 @@ public final class AscensionCoresConfig {
                 # When it rolls, target level is weighted (higher levels are rarer).
                 randomLootAscensionChance=%.4f
                 treasureRandomLootAscensionChance=%.4f
+
+                # ── Compatibility ─────────────────────────────────────────────────
+                # If true, BetterVanillaMobs "touched" mobs get the special
+                # rarity-scaled drop rates below instead of the generic mob rates.
+                enableBetterVanillaMobsIntegration=%s
+                # BVM-only override: Ascension Core chance for a 1-star touched mob.
+                # 2-5 star mobs add the per-star value below for each extra star.
+                # Formula: chance = base + ((stars - 1) * perStar).
+                betterVanillaMobsAscensionCoreDropChance=%.4f
+                # Added to the Ascension Core chance for each BVM rarity star after the first.
+                # Default: 1-star 4%%, 2-star 5.5%%, 3-star 7%%, 4-star 8.5%%, 5-star/Alpha 10%%.
+                betterVanillaMobsAscensionCoreDropChancePerStar=%.4f
+                # BVM-only override: Chaos Core chance for a 1-star touched mob.
+                # Replaces mobChaosCoreDropChance for BVM mobs.
+                betterVanillaMobsChaosCoreDropChance=%.4f
+                # Added to the Chaos Core chance for each BVM rarity star after the first.
+                # Default: 1-star 0.3%%, 2-star 0.6%%, 3-star 0.9%%, 4-star 1.2%%, 5-star/Alpha 1.5%%.
+                betterVanillaMobsChaosCoreDropChancePerStar=%.4f
                 """.formatted(
                     maxLevel,
                     upgradeCoreCostLevel1,
@@ -237,7 +242,6 @@ public final class AscensionCoresConfig {
                     upgradeCoreCostLevel5,
                     showInventoryLevelMarkers,
                     playAnvilFeedback,
-                    enableBetterVanillaMobsIntegration,
                     upgradeXpCostLevel1,
                     upgradeXpCostLevel2,
                     upgradeXpCostLevel3,
@@ -247,10 +251,6 @@ public final class AscensionCoresConfig {
                     mobChaosCoreDropChance,
                     mobAscensionCoreMinDrop,
                     mobAscensionCoreMaxDrop,
-                    betterVanillaMobsAscensionCoreDropChance,
-                    betterVanillaMobsAscensionCoreDropChancePerStar,
-                    betterVanillaMobsChaosCoreDropChance,
-                    betterVanillaMobsChaosCoreDropChancePerStar,
                     levelCoreChestChance,
                     levelCoreChestMinDrop,
                     levelCoreChestMaxDrop,
@@ -259,7 +259,12 @@ public final class AscensionCoresConfig {
                     ancientCityChaosCoreChance,
                     treasureChaosCoreChance,
                     randomLootAscensionChance,
-                    treasureRandomLootAscensionChance
+                    treasureRandomLootAscensionChance,
+                    enableBetterVanillaMobsIntegration,
+                    betterVanillaMobsAscensionCoreDropChance,
+                    betterVanillaMobsAscensionCoreDropChancePerStar,
+                    betterVanillaMobsChaosCoreDropChance,
+                    betterVanillaMobsChaosCoreDropChancePerStar
                 );
     }
 
