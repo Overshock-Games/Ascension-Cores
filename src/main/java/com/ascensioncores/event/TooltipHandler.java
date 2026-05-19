@@ -29,13 +29,14 @@ public final class TooltipHandler {
             List<Component> lines) {
 
         if (stack.is(ModItems.ASCENSION_CORE)) {
-            lines.add(Component.literal("Levels gear in an anvil.").withStyle(ChatFormatting.GRAY));
-            lines.add(Component.literal("Cost scales with the item's current level.").withStyle(ChatFormatting.DARK_GRAY));
+            lines.add(Component.literal("Use in an anvil to level up/ascend gear.").withStyle(ChatFormatting.GRAY));
+            lines.add(Component.literal("Each level adds a new trait, up to the item's capacity and enhanced existing traits.").withStyle(ChatFormatting.DARK_GRAY));
             return;
         }
 
         if (stack.is(ModItems.CHAOS_CORE)) {
-            lines.add(Component.literal("Rerolls traits from the bottom of an upgraded item in an anvil.").withStyle(ChatFormatting.GRAY));
+            lines.add(Component.literal("Use in an anvil to reroll traits on ascended gear.").withStyle(ChatFormatting.GRAY));
+            lines.add(Component.literal("Rerolls lowest-rank traits first (bottom of list).").withStyle(ChatFormatting.DARK_GRAY));
             lines.add(Component.literal("Stack more cores to reroll more traits at once.").withStyle(ChatFormatting.DARK_GRAY));
             return;
         }
