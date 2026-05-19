@@ -132,20 +132,43 @@ public final class TooltipHandler {
 
     private static int statColor(String id) {
         return switch (id) {
-            case "venom"            -> 0x55FF55;
-            case "frostbite"        -> 0x55FFFF;
-            case "shock"            -> 0xFFFF55;
-            case "wither"           -> 0x7F00FF;
-            case "grievous"         -> 0xCC2200;
-            case "momentum"         -> 0xFF8C00;
-            case "duelist_damage"   -> 0xFFD700;
-            case "pinning"          -> 0x4488FF;
-            case "overcharge_damage"-> 0xFFEE00;
-            case "retaliation"      -> 0xFF3300;
-            case "second_wind"      -> 0xFF88BB;
-            case "bulwark"          -> 0xAAAAAA;
-            case "vigor"            -> 0xFF2244;
-            default                 -> 0x2BBBCC;
+            case "life_steal"           -> 0xFF5555;
+            case "reach"                -> 0x55AAFF;
+            case "attack_speed"         -> 0xFFAA00;
+            case "armor_shred"          -> 0xFF7755;
+            case "toughness_shred"      -> 0xDD8866;
+            case "experience"           -> 0x55FF55;
+            case "critical_damage"      -> 0xFF55FF;
+            case "execute_damage"       -> 0xFF3333;
+            case "ambush_damage"        -> 0x7777FF;
+            case "frostbite"            -> 0x55FFFF;
+            case "venom"                -> 0x55FF55;
+            case "shock"                -> 0xFFFF55;
+            case "sprinting_speed"      -> 0x55FFAA;
+            case "stealth"              -> 0x8888AA;
+            case "jump"                 -> 0xAAFF55;
+            case "repair_cost"          -> 0x66CCAA;
+            case "duelist_damage"       -> 0xFFD700;
+            case "wither"               -> 0x7F00FF;
+            case "momentum"             -> 0xFF8C00;
+            case "grievous"             -> 0xCC2200;
+            case "pinning"              -> 0x4488FF;
+            case "overcharge_damage"    -> 0xFFEE00;
+            case "evasion"              -> 0x88FFDD;
+            case "deflection"           -> 0xAAAAFF;
+            case "tenacity"             -> 0xFFAA55;
+            case "melee_resistance"     -> 0xBBBBBB;
+            case "natural_regeneration" -> 0x66FF88;
+            case "last_stand_guard"     -> 0xFF8844;
+            case "steady_guard"         -> 0xC0C0C0;
+            case "consuming_speed"      -> 0xFFDD66;
+            case "tamed_resistance"     -> 0xDDFFAA;
+            case "stamina"              -> 0x66FFCC;
+            case "retaliation"          -> 0xFF3300;
+            case "second_wind"          -> 0xFF88BB;
+            case "bulwark"              -> 0xAAAAAA;
+            case "vigor"                -> 0xFF2244;
+            default                     -> 0x2BBBCC;
         };
     }
 

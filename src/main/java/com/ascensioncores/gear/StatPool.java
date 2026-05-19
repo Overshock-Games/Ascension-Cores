@@ -194,7 +194,7 @@ public final class StatPool {
     // ── Lookup ──────────────────────────────────────────────────────────────
 
     public static StatDef getById(String id) {
-        for (List<StatDef> pool : List.of(WEAPON_POOL, ARMOR_POOL, TOOL_POOL)) {
+        for (List<StatDef> pool : List.of(WEAPON_POOL, RANGED_WEAPON_POOL, ARMOR_POOL, TOOL_POOL)) {
             for (StatDef def : pool) if (def.id().equals(id)) return def;
         }
         return null;

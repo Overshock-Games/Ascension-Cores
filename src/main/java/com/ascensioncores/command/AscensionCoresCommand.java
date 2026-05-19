@@ -159,7 +159,6 @@ public final class AscensionCoresCommand {
 
         StatPool.StatDef def = StatPool.getById(id);
         if (def == null) {
-            // also search ranged pool since getById only checks weapon/armor/tool
             def = GearHelper.getPool(stack).stream()
                 .filter(d -> d.id().equals(id)).findFirst().orElse(null);
         }
