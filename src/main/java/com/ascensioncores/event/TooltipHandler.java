@@ -90,10 +90,13 @@ public final class TooltipHandler {
     }
 
     private static String formatStatValue(StatPool.StatDef def, String id, double value) {
-        if (id.equals("frostbite") || id.equals("venom") || id.equals("shock")) {
+        if (id.equals("frostbite") || id.equals("venom") || id.equals("shock")
+                || id.equals("wither") || id.equals("grievous") || id.equals("pinning")) {
             return String.format("+%.1f%% Chance", value * 100.0);
         } else if (id.equals("life_steal")) {
             return String.format("+%.1f%%", value * 100.0);
+        } else if (id.equals("repair_cost")) {
+            return String.format("%.1f%% Discount", Math.abs(value) * 100.0);
         } else if (id.equals("reach") || id.equals("stealth")) {
             return String.format("+%.2f Blocks", value);
         }
