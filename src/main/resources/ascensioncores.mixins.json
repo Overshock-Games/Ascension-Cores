@@ -5,6 +5,7 @@
   "mixins": [
     "ItemCombinerMenuAccessor",
     "AnvilMenuMixin",
+    "SmithingMenuMixin",
     "EnchantmentMenuMixin",
     "PlayerAttackMixin",
     "LivingEntityDamageMixin",

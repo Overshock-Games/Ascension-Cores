@@ -72,25 +72,25 @@ public final class StatPool {
     private static List<StatDef> createWeaponPool() {
         List<StatDef> pool = new ArrayList<>(List.of(
             new StatDef("life_steal",           PuffishAttributes.LIFE_STEAL,           0.02, 0.06, "Life Steal",           "%"),
-            new StatDef("reach",                Attributes.ENTITY_INTERACTION_RANGE,    0.25, 0.75, "Reach",                " blk"),
-            new StatDef("attack_speed",         Attributes.ATTACK_SPEED,                0.10, 0.30, "Attack Speed",         " pts"),
-            new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.50, 2.00, "Armor Shred",          " pts"),
-            new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.30, 1.00, "Toughness Shred",      " pts"),
+            new StatDef("reach",                Attributes.ENTITY_INTERACTION_RANGE,    0.10, 0.30, "Reach",                " blk"),
+            new StatDef("attack_speed",         Attributes.ATTACK_SPEED,                0.05, 0.15, "Attack Speed",         " pts"),
+            new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.20, 0.70, "Armor Shred",          " pts"),
+            new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.10, 0.35, "Toughness Shred",      " pts"),
             new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
             new StatDef("critical_damage",      null,                                   0.10, 0.25, "Critical Damage",      "%"),
             new StatDef("execution_damage",     null,                                   0.08, 0.18, "Execution Damage",     "%"),
             new StatDef("ambush_damage",        null,                                   0.08, 0.18, "Ambush Damage",        "%"),
-            new StatDef("frostbite",            null,                                   0.05, 0.15, "Frostbite",            "%"),
-            new StatDef("venom",                null,                                   0.05, 0.15, "Venom",                "%"),
-            new StatDef("shock",                null,                                   0.05, 0.15, "Shock",                "%"),
+            new StatDef("frostbite",            null,                                   0.03, 0.10, "Frostbite",            "%"),
+            new StatDef("venom",                null,                                   0.03, 0.10, "Venom",                "%"),
+            new StatDef("shock",                null,                                   0.03, 0.10, "Shock",                "%"),
             new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.50, 2.00, "Stealth",              " blk"),
             new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
             new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
             new StatDef("opening_damage",       null,                                   0.05, 0.10, "Opening Damage",       "%"),
-            new StatDef("wither",               null,                                   0.04, 0.12, "Wither",               "%"),
-            new StatDef("momentum",             null,                                   0.03, 0.08, "Momentum",             "%"),
-            new StatDef("grievous",             null,                                   0.05, 0.15, "Grievous",             "%")
+            new StatDef("wither",               null,                                   0.03, 0.08, "Wither",               "%"),
+            new StatDef("chain_damage",         null,                                   0.01, 0.03, "Chain Damage",         "%"),
+            new StatDef("heal_suppress",        null,                                   0.03, 0.08, "Heal Suppress",        "%")
         ));
         return List.copyOf(pool);
     }
@@ -100,23 +100,23 @@ public final class StatPool {
         // ProjectileDamageMixin handles crit/execute/ambush/frost/venom/shock for arrows.
         List<StatDef> pool = new ArrayList<>(List.of(
             new StatDef("life_steal",           PuffishAttributes.LIFE_STEAL,           0.02, 0.06, "Life Steal",           "%"),
-            new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.50, 2.00, "Armor Shred",          " pts"),
-            new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.30, 1.00, "Toughness Shred",      " pts"),
+            new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.20, 0.70, "Armor Shred",          " pts"),
+            new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.10, 0.35, "Toughness Shred",      " pts"),
             new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
             new StatDef("critical_damage",      null,                                   0.10, 0.25, "Critical Damage",      "%"),
             new StatDef("execution_damage",     null,                                   0.08, 0.18, "Execution Damage",     "%"),
             new StatDef("ambush_damage",        null,                                   0.08, 0.18, "Ambush Damage",        "%"),
-            new StatDef("frostbite",            null,                                   0.05, 0.15, "Frostbite",            "%"),
-            new StatDef("venom",                null,                                   0.05, 0.15, "Venom",                "%"),
-            new StatDef("shock",                null,                                   0.05, 0.15, "Shock",                "%"),
+            new StatDef("frostbite",            null,                                   0.03, 0.10, "Frostbite",            "%"),
+            new StatDef("venom",                null,                                   0.03, 0.10, "Venom",                "%"),
+            new StatDef("shock",                null,                                   0.03, 0.10, "Shock",                "%"),
             new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.50, 2.00, "Stealth",              " blk"),
             new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
             new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
             new StatDef("opening_damage",       null,                                   0.05, 0.10, "Opening Damage",       "%"),
-            new StatDef("wither",               null,                                   0.04, 0.12, "Wither",               "%"),
-            new StatDef("grievous",             null,                                   0.05, 0.15, "Grievous",             "%"),
-            new StatDef("pinning",              null,                                   0.05, 0.15, "Pinning",              "%"),
+            new StatDef("wither",               null,                                   0.03, 0.08, "Wither",               "%"),
+            new StatDef("heal_suppress",        null,                                   0.03, 0.08, "Heal Suppress",        "%"),
+            new StatDef("pinning",              null,                                   0.03, 0.08, "Pinning",              "%"),
             new StatDef("overcharge_damage",    null,                                   0.08, 0.20, "Overcharge Damage",    "%")
         ));
         return List.copyOf(pool);
@@ -127,7 +127,7 @@ public final class StatPool {
             new StatDef("evasion",              null,                                   0.02, 0.08, "Evasion",              "%"),
             new StatDef("deflection",           null,                                   0.05, 0.15, "Deflection",           "%"),
             new StatDef("tenacity",             null,                                   0.10, 0.30, "Tenacity",             "%"),
-            new StatDef("melee_resistance",     PuffishAttributes.MELEE_RESISTANCE,     0.50, 2.00, "Melee Resistance",     " DMG"),
+            new StatDef("melee_resistance",     null,                                   0.02, 0.06, "Melee Resistance",     "%"),
             new StatDef("natural_regeneration", PuffishAttributes.NATURAL_REGENERATION, 0.05, 0.20, "Natural Regeneration", "%"),
             new StatDef("low_health_guard",     null,                                   0.05, 0.12, "Low Health Guard",     "%"),
             new StatDef("steady_guard",         null,                                   0.04, 0.10, "Steady Guard",         "%"),

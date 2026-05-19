@@ -93,6 +93,10 @@ public final class GearHelper {
         setLevel(stack, getLevel(stack) + 1, new Random(getUpgradeSeed(stack)));
     }
 
+    public static void fillTraitsDeterministic(ItemStack stack) {
+        setLevel(stack, getLevel(stack), new Random(getUpgradeSeed(stack)));
+    }
+
     public static void setLevel(ItemStack stack, int requestedLevel) {
         setLevel(stack, requestedLevel, null);
     }
@@ -139,8 +143,11 @@ public final class GearHelper {
         rebuildAttributes(stack, level, stats);
     }
 
-    private static long getUpgradeSeed(ItemStack stack) {
+    public static long getUpgradeSeed(ItemStack stack) {
         long seed = 0xDEADBEEFCAFEL;
+        if (stack.has(ModComponents.RANDOM_SEED)) {
+            seed = mixSeed(seed, stack.get(ModComponents.RANDOM_SEED));
+        }
         Identifier itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         seed = mixSeed(seed, itemId.toString().hashCode());
         seed = mixSeed(seed, getLevel(stack));
@@ -154,6 +161,9 @@ public final class GearHelper {
 
     private static long getChaosRerollSeed(ItemStack stack) {
         long seed = 0x5DEECE66DL;
+        if (stack.has(ModComponents.RANDOM_SEED)) {
+            seed = mixSeed(seed, stack.get(ModComponents.RANDOM_SEED));
+        }
         Identifier itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         seed = mixSeed(seed, itemId.toString().hashCode());
         seed = mixSeed(seed, getLevel(stack));

@@ -30,9 +30,9 @@ public abstract class LivingEntityEffectMixin {
     }
 
     @ModifyVariable(method = "heal", at = @At("HEAD"), argsOnly = true)
-    private float ascensioncores$applyGrievousWound(float amount) {
+    private float ascensioncores$applyHealSuppress(float amount) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (TraitState.hasGrievousWound(entity.getUUID())) {
+        if (TraitState.hasHealSuppress(entity.getUUID())) {
             return amount * 0.5f;
         }
         return amount;

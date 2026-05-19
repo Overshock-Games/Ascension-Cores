@@ -43,12 +43,31 @@ public abstract class AnvilMenuMixin {
         if (left.isEmpty() || right.isEmpty()) return;
         if (!GearHelper.isGear(left)) return;
 
+        Player seedPlayer = acc.getPlayer();
+        if (seedPlayer != null && !seedPlayer.level().isClientSide()
+                && !left.has(ModComponents.RANDOM_SEED)) {
+            left.set(ModComponents.RANDOM_SEED, java.util.concurrent.ThreadLocalRandom.current().nextLong());
+        }
+
         int currentLevel = GearHelper.getLevel(left);
 
         // ── A: Upgrade with cores ──────────────────────────────────────────
         if (right.is(ModItems.ASCENSION_CORE)) {
-            if (currentLevel >= GearHelper.getMaxLevel()) {
-                resultSlots.setItem(0, ItemStack.EMPTY);
+            int maxLevel = GearHelper.getMaxLevel();
+            int capacity = Math.min(GearHelper.getMaterialCapacity(left), maxLevel);
+            List<RolledStat> currentStats = GearHelper.getRolledStats(left);
+
+            if (currentLevel >= maxLevel) {
+                // At max level: fill empty trait slots if capacity expanded (e.g. material upgrade)
+                if (currentStats.size() < capacity) {
+                    ItemStack result = left.copy();
+                    GearHelper.fillTraitsDeterministic(result);
+                    resultSlots.setItem(0, result);
+                    repairItemCountCost = 1;
+                    cost.set(currentLevel);
+                } else {
+                    resultSlots.setItem(0, ItemStack.EMPTY);
+                }
                 return;
             }
             int coreCost = GearHelper.getAscensionCoreCost(currentLevel);
@@ -77,7 +96,12 @@ public abstract class AnvilMenuMixin {
                 }
                 return;
             }
-            int rerollCount = right.getCount();
+            int currentTraits = GearHelper.getRolledStats(left).size();
+            int rerollCount = Math.min(right.getCount(), currentTraits);
+            if (rerollCount <= 0) {
+                resultSlots.setItem(0, ItemStack.EMPTY);
+                return;
+            }
             ItemStack result = left.copy();
             GearHelper.rerollDeterministic(result, rerollCount);
 
@@ -87,8 +111,14 @@ public abstract class AnvilMenuMixin {
             return;
         }
 
-        // ── C: Trait donation — same item type, both ascension gear ──────────
+        // ── C: Trait donation — same item type, both leveled ascension gear ──────────
         if (GearHelper.isGear(right) && left.getItem() == right.getItem()) {
+            int rightLevel = GearHelper.getLevel(right);
+            if (currentLevel == 0 || rightLevel == 0) {
+                resultSlots.setItem(0, ItemStack.EMPTY);
+                return;
+            }
+
             List<RolledStat> leftStats = GearHelper.getRolledStats(left);
             List<RolledStat> rightStats = GearHelper.getRolledStats(right);
             int capacity = Math.min(GearHelper.getMaterialCapacity(left), GearHelper.getMaxLevel());
@@ -106,9 +136,10 @@ public abstract class AnvilMenuMixin {
                     newStats.add(donated);
                     result.set(ModComponents.ROLLED_STATS, newStats);
                     GearHelper.rebuildAttributes(result, GearHelper.getLevel(result), newStats);
-        
+
                     resultSlots.setItem(0, result);
-                    cost.set(Math.max(1, GearHelper.getLevel(right)));
+                    repairItemCountCost = right.getCount();
+                    cost.set(Math.max(1, rightLevel));
                     return;
                 }
             }
@@ -163,13 +194,23 @@ public abstract class AnvilMenuMixin {
 
     private static void playFeedback(Player player, String message, int level) {
         if (!AscensionCoresConfig.playAnvilFeedback) return;
-        switch (level) {
-            case 1 -> player.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 0.6f, 1.4f);
-            case 2 -> player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 0.6f, 1.2f);
-            case 3 -> player.playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE, 0.6f, 1.0f);
-            case 4 -> player.playSound(SoundEvents.ENDER_DRAGON_GROWL, 0.4f, 1.5f);
-            default -> player.playSound(SoundEvents.ENCHANTMENT_TABLE_USE, 0.6f, 1.2f);
-        }
+        net.minecraft.sounds.SoundEvent sound = switch (level) {
+            case 1 -> SoundEvents.AMETHYST_BLOCK_CHIME;
+            case 2 -> SoundEvents.ENCHANTMENT_TABLE_USE;
+            case 3 -> SoundEvents.RESPAWN_ANCHOR_CHARGE;
+            case 4 -> SoundEvents.ENDER_DRAGON_GROWL;
+            default -> SoundEvents.ENCHANTMENT_TABLE_USE;
+        };
+        float pitch = switch (level) {
+            case 1 -> 1.4f;
+            case 2 -> 1.2f;
+            case 3 -> 1.0f;
+            case 4 -> 1.5f;
+            default -> 1.2f;
+        };
+        float vol = level == 4 ? 0.4f : 0.6f;
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+            sound, net.minecraft.sounds.SoundSource.PLAYERS, vol, pitch);
         player.sendOverlayMessage(Component.literal(message));
     }
 }

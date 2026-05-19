@@ -234,11 +234,11 @@ public final class AscensionCoresConfig {
                 # Weapon traits:  life_steal, reach, attack_speed, armor_shred, toughness_shred,
                 #   experience_bonus, critical_damage, execution_damage, ambush_damage, frostbite, venom,
                 #   shock, sprinting_speed, stealth, jump, repair_discount,
-                #   opening_damage, wither, momentum, grievous
+                #   opening_damage, wither, chain_damage, heal_suppress
                 # Ranged traits:  life_steal, armor_shred, toughness_shred, experience_bonus,
                 #   critical_damage, execution_damage, ambush_damage, frostbite, venom, shock,
                 #   sprinting_speed, stealth, jump, repair_discount,
-                #   opening_damage, wither, grievous, pinning, overcharge_damage
+                #   opening_damage, wither, heal_suppress, pinning, overcharge_damage
                 # Armor traits:   evasion, deflection, tenacity, melee_resistance,
                 #   natural_regeneration, low_health_guard, steady_guard, sprinting_speed,
                 #   consuming_speed, repair_discount, stealth, tamed_resistance, stamina, experience_bonus, jump,

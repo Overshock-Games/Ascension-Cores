@@ -21,78 +21,78 @@ class TraitStateTest {
         targetB = UUID.randomUUID();
     }
 
-    // ── Momentum ──────────────────────────────────────────────────────────────
+    // ── Chain Damage ──────────────────────────────────────────────────────────
 
     @Test
-    void momentum_firstHit_returnsZero() {
-        assertEquals(0, TraitState.getMomentumHits(player, targetA));
+    void chain_firstHit_returnsZero() {
+        assertEquals(0, TraitState.getChainHits(player, targetA));
     }
 
     @Test
-    void momentum_secondHitSameTarget_returnsOne() {
+    void chain_secondHitSameTarget_returnsOne() {
         TraitState.recordHit(player, targetA);
-        assertEquals(1, TraitState.getMomentumHits(player, targetA));
+        assertEquals(1, TraitState.getChainHits(player, targetA));
     }
 
     @Test
-    void momentum_multipleHitsSameTarget_accumulates() {
+    void chain_multipleHitsSameTarget_accumulates() {
         TraitState.recordHit(player, targetA);
         TraitState.recordHit(player, targetA);
         TraitState.recordHit(player, targetA);
-        assertEquals(3, TraitState.getMomentumHits(player, targetA));
+        assertEquals(3, TraitState.getChainHits(player, targetA));
     }
 
     @Test
-    void momentum_switchTarget_resetsCount() {
+    void chain_switchTarget_resetsCount() {
         TraitState.recordHit(player, targetA);
         TraitState.recordHit(player, targetA);
         TraitState.recordHit(player, targetB); // switch
-        assertEquals(0, TraitState.getMomentumHits(player, targetA));
-        assertEquals(1, TraitState.getMomentumHits(player, targetB));
+        assertEquals(0, TraitState.getChainHits(player, targetA));
+        assertEquals(1, TraitState.getChainHits(player, targetB));
     }
 
     @Test
-    void momentum_independentPerPlayer() {
+    void chain_independentPerPlayer() {
         UUID player2 = UUID.randomUUID();
         TraitState.recordHit(player, targetA);
         TraitState.recordHit(player, targetA);
-        assertEquals(2, TraitState.getMomentumHits(player, targetA));
-        assertEquals(0, TraitState.getMomentumHits(player2, targetA));
+        assertEquals(2, TraitState.getChainHits(player, targetA));
+        assertEquals(0, TraitState.getChainHits(player2, targetA));
     }
 
-    // ── Grievous ──────────────────────────────────────────────────────────────
+    // ── Heal Suppress ─────────────────────────────────────────────────────────
 
     @Test
-    void grievous_noWound_returnsFalse() {
-        assertFalse(TraitState.hasGrievousWound(targetA));
-    }
-
-    @Test
-    void grievous_freshWound_returnsTrue() {
-        TraitState.applyGrievousWound(targetA, 5000L);
-        assertTrue(TraitState.hasGrievousWound(targetA));
+    void healSuppress_none_returnsFalse() {
+        assertFalse(TraitState.hasHealSuppress(targetA));
     }
 
     @Test
-    void grievous_expiredWound_returnsFalse() throws InterruptedException {
-        TraitState.applyGrievousWound(targetA, 50L);
+    void healSuppress_fresh_returnsTrue() {
+        TraitState.applyHealSuppress(targetA, 5000L);
+        assertTrue(TraitState.hasHealSuppress(targetA));
+    }
+
+    @Test
+    void healSuppress_expired_returnsFalse() throws InterruptedException {
+        TraitState.applyHealSuppress(targetA, 50L);
         Thread.sleep(60);
-        assertFalse(TraitState.hasGrievousWound(targetA));
+        assertFalse(TraitState.hasHealSuppress(targetA));
     }
 
     @Test
-    void grievous_renewsOnReapply() throws InterruptedException {
-        TraitState.applyGrievousWound(targetA, 80L);
+    void healSuppress_renewsOnReapply() throws InterruptedException {
+        TraitState.applyHealSuppress(targetA, 80L);
         Thread.sleep(40);
-        TraitState.applyGrievousWound(targetA, 5000L); // renew
+        TraitState.applyHealSuppress(targetA, 5000L); // renew
         Thread.sleep(60);
-        assertTrue(TraitState.hasGrievousWound(targetA)); // still active
+        assertTrue(TraitState.hasHealSuppress(targetA)); // still active
     }
 
     @Test
-    void grievous_independentPerEntity() {
-        TraitState.applyGrievousWound(targetA, 5000L);
-        assertFalse(TraitState.hasGrievousWound(targetB));
+    void healSuppress_independentPerEntity() {
+        TraitState.applyHealSuppress(targetA, 5000L);
+        assertFalse(TraitState.hasHealSuppress(targetB));
     }
 
     // ── Second Wind ───────────────────────────────────────────────────────────

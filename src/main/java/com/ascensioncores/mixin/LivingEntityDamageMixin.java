@@ -54,6 +54,15 @@ public abstract class LivingEntityDamageMixin {
             amount *= (float) (1.0 - Math.min(bulwark, 0.50));
         }
 
+        boolean isMelee = source.getDirectEntity() instanceof LivingEntity
+            && !(source.getDirectEntity() instanceof Projectile);
+        if (isMelee) {
+            double meleeReduction = GearHelper.getScaledArmorStatAmount(entity, "melee_resistance");
+            if (meleeReduction > 0.0) {
+                amount *= (float) (1.0 - Math.min(meleeReduction, 0.50));
+            }
+        }
+
         return amount;
     }
 

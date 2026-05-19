@@ -27,5 +27,13 @@ public final class ModComponents {
             .build()
     );
 
+    public static final DataComponentType<Long> RANDOM_SEED = Registry.register(
+        BuiltInRegistries.DATA_COMPONENT_TYPE,
+        Identifier.fromNamespaceAndPath("ascensioncores", "random_seed"),
+        DataComponentType.<Long>builder()
+            .persistent(Codec.LONG)
+            .build()
+    );
+
     public static void register() {}
 }

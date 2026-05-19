@@ -55,8 +55,8 @@ public final class TooltipHandler {
         }
 
         int maxLevel = GearHelper.getMaxLevel();
-        StringBuilder pips = new StringBuilder("  ");
-        for (int p = 1; p <= maxLevel; p++) pips.append(p <= level ? "✦" : "○");
+        StringBuilder pips = new StringBuilder("  Tier: ");
+        for (int p = 1; p <= maxLevel; p++) pips.append(p <= level ? "◆" : "◇");
         lines.add(Component.literal(pips.toString())
             .withStyle(style -> style.withColor(levelColor(level)).withBold(true)));
 
@@ -69,8 +69,16 @@ public final class TooltipHandler {
             if (def == null) continue;
 
             int multiplier = level - i;
+            if (multiplier <= 0) {
+                int awakensAt = i + 1;
+                lines.add(Component.literal("  ✦ " + def.displayName() + ": Awakens at L" + awakensAt)
+                    .withStyle(style -> style.withColor(0x888888).withItalic(true)));
+                continue;
+            }
+
             double current = rolled.amount() * multiplier;
-            String display = "  ✦ " + def.displayName() + ": " + formatStatValue(def, rolled.id(), current);
+            String rankPips = "  " + "✦".repeat(multiplier) + " ";
+            String display = rankPips + def.displayName() + ": " + formatStatValue(def, rolled.id(), current);
             if (showNextLevelPreview && level < GearHelper.getMaxLevel()) {
                 double next = rolled.amount() * (multiplier + 1);
                 display += " ➔ " + formatStatValue(def, rolled.id(), next);
@@ -91,13 +99,13 @@ public final class TooltipHandler {
 
     private static String formatStatValue(StatPool.StatDef def, String id, double value) {
         if (id.equals("frostbite") || id.equals("venom") || id.equals("shock")
-                || id.equals("wither") || id.equals("grievous") || id.equals("pinning")) {
+                || id.equals("wither") || id.equals("heal_suppress") || id.equals("pinning")) {
             return String.format("+%.1f%% Chance", value * 100.0);
         } else if (id.equals("life_steal")) {
             return String.format("+%.1f%%", value * 100.0);
         } else if (id.equals("repair_discount")) {
             return String.format("%.1f%% Discount", Math.abs(value) * 100.0);
-        } else if (id.equals("low_health_guard") || id.equals("steady_guard") || id.equals("bulwark")) {
+        } else if (id.equals("low_health_guard") || id.equals("steady_guard") || id.equals("bulwark") || id.equals("melee_resistance")) {
             return String.format("+%.1f%% Damage Reduction", value * 100.0);
         } else if (id.equals("emergency_healing")) {
             return String.format("+%.1f%% Max Health", value * 100.0);
@@ -157,8 +165,8 @@ public final class TooltipHandler {
             case "repair_discount"      -> 0x66CCAA;
             case "opening_damage"       -> 0xFFD700;
             case "wither"               -> 0x7F00FF;
-            case "momentum"             -> 0xFF8C00;
-            case "grievous"             -> 0xCC2200;
+            case "chain_damage"         -> 0xFF8C00;
+            case "heal_suppress"        -> 0xCC2200;
             case "pinning"              -> 0x4488FF;
             case "overcharge_damage"    -> 0xFFEE00;
             case "evasion"              -> 0x88FFDD;

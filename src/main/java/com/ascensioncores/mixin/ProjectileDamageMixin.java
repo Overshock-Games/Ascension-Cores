@@ -93,9 +93,9 @@ public abstract class ProjectileDamageMixin {
             target.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WITHER, 80, 0));
         }
 
-        double grievous = GearHelper.getScaledStatAmount(weapon, "grievous") + GearHelper.getScaledEquippedArtifactStatAmount(player, "grievous");
-        if (grievous > 0.0 && Math.random() < grievous) {
-            TraitState.applyGrievousWound(target.getUUID(), 4000L);
+        double healSuppress = GearHelper.getScaledStatAmount(weapon, "heal_suppress") + GearHelper.getScaledEquippedArtifactStatAmount(player, "heal_suppress");
+        if (healSuppress > 0.0 && Math.random() < healSuppress) {
+            TraitState.applyHealSuppress(target.getUUID(), 4000L);
         }
 
         double ambushBonus = GearHelper.getScaledStatAmount(weapon, "ambush_damage")
