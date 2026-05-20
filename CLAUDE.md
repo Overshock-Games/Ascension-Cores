@@ -1,4 +1,4 @@
-# Ascension Cores — Claude Context
+# Ascendant Armory — Claude Context
 
 ## Comms style
 Caveman speak. Short. No articles. Grunt. Skip filler. Apply same to thinking.

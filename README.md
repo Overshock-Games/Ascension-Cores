@@ -1,8 +1,8 @@
-# Ascension Cores
+# Ascendant Armory
 
 **ARPG gear progression for vanilla items.** Vanilla progression ends at netherite + max enchants. Every diamond sword you find is identical to the last, no god rolls, no reason to keep hunting. Most "RPG loot" mods solve this by adding hundreds of custom items, tiers, and rarities that fight with vanilla and every other mod you have installed.
 
-Ascension Cores does the opposite: your diamond sword stays a diamond sword. But now it can be *Honed*, *Empowered*, *Ascendant*, *Mythic*, or *Divine*, each tier earned at the anvil, each tier adding a randomly-rolled trait. Deep late-game progression and build crafting without breaking anything else.
+Ascendant Armory does the opposite: your diamond sword stays a diamond sword. But now it can be *Honed*, *Empowered*, *Ascendant*, *Mythic*, or *Divine*, each tier earned at the anvil, each tier adding a randomly-rolled trait. Deep late-game progression and build crafting without breaking anything else.
 
 - 5 ascension tiers (*Honed* → *Divine*), each adds a trait slot + enchantment slot
 - 30+ traits across weapon, ranged, armor, tool pools
