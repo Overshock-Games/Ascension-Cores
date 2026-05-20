@@ -1,5 +1,6 @@
 package com.ascensioncores.event;
 
+import com.ascensioncores.AscensionCoresConfig;
 import com.ascensioncores.gear.GearHelper;
 import com.ascensioncores.gear.RolledStat;
 import com.ascensioncores.gear.StatPool;
@@ -87,9 +88,10 @@ public final class TooltipHandler {
             lines.add(Component.literal(display).withStyle(style -> style.withColor(statColor(rolled.id()))));
         }
 
-        int enchantSlots = level;
-        lines.add(Component.literal("  Enchantment Slots: " + enchantSlots)
-            .withStyle(ChatFormatting.DARK_PURPLE));
+        if (AscensionCoresConfig.enableEnchantmentSlots) {
+            lines.add(Component.literal("  Enchantment Slots: " + level)
+                .withStyle(ChatFormatting.DARK_PURPLE));
+        }
 
         if (showNextLevelPreview && level < GearHelper.getMaxLevel()) {
             int coreCost = GearHelper.getAscensionCoreCost(level);

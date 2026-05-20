@@ -142,7 +142,7 @@ public final class GearHelper {
         int keep = Math.max(0, existing.size() - rerollCount);
         List<RolledStat> stats = new ArrayList<>(existing.subList(0, keep));
         while (stats.size() < statCount) {
-            RolledStat s = StatPool.rollStat(stats, pool, level, random);
+            RolledStat s = StatPool.rollStat(stats, pool, level, random, AscensionCoresConfig.chaosGambleMode);
             if (s != null) stats.add(s);
             else break;
         }
@@ -204,6 +204,15 @@ public final class GearHelper {
 
     public static int getAscensionCoreCost(int currentLevel) {
         return AscensionCoresConfig.getUpgradeCoreCost(currentLevel);
+    }
+
+    /** Total Ascension Cores spent to bring gear from level 0 up to {@code level}. */
+    public static int getTotalCoreCost(int level) {
+        int total = 0;
+        for (int i = 0; i < level; i++) {
+            total += getAscensionCoreCost(i);
+        }
+        return total;
     }
 
     // ── Attribute building ──────────────────────────────────────────────────

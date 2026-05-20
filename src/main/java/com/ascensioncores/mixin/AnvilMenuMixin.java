@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Container;
@@ -40,8 +41,24 @@ public abstract class AnvilMenuMixin {
         ItemStack left  = inputSlots.getItem(0);
         ItemStack right = inputSlots.getItem(1);
 
-        if (left.isEmpty() || right.isEmpty()) return;
+        if (left.isEmpty()) return;
         if (!GearHelper.isGear(left)) return;
+
+        // ── Salvage: leveled gear alone — no second item, no rename ────────
+        if (right.isEmpty()) {
+            if (AscensionCoresConfig.enableSalvage
+                    && GearHelper.getLevel(left) > 0
+                    && resultSlots.getItem(0).isEmpty()) {   // skip if a rename is pending
+                int total = GearHelper.getTotalCoreCost(GearHelper.getLevel(left));
+                int refund = Math.min(64, (int) Math.floor(total * AscensionCoresConfig.salvageRefundPercent));
+                if (refund > 0) {
+                    resultSlots.setItem(0, new ItemStack(ModItems.ASCENSION_CORE, refund));
+                    repairItemCountCost = 0;
+                    cost.set(Math.max(1, GearHelper.getLevel(left)));
+                }
+            }
+            return;
+        }
 
         Player seedPlayer = acc.getPlayer();
         if (seedPlayer != null && !seedPlayer.level().isClientSide()
@@ -148,11 +165,12 @@ public abstract class AnvilMenuMixin {
         }
 
         // ── D: Enchanted book — enforce enchantment capacity ──────────────
+        if (!AscensionCoresConfig.enableEnchantmentSlots) return;
+        if (!right.has(DataComponents.STORED_ENCHANTMENTS)) return; // books only — skip repairs/renames
         ItemStack currentResult = resultSlots.getItem(0);
         if (currentResult.isEmpty()) return;
-        if (!GearHelper.hasAscensionData(left)) return;
 
-        int maxEnchants = currentLevel;
+        int maxEnchants = currentLevel; // getLevel() → 0 for un-ascended gear, blocking all books
         if (GearHelper.countNonCurseEnchantments(currentResult) > maxEnchants) {
             resultSlots.setItem(0, ItemStack.EMPTY);
         }
@@ -166,7 +184,16 @@ public abstract class AnvilMenuMixin {
         ItemStack left = inputSlots.getItem(0);
         ItemStack right = inputSlots.getItem(1);
 
-        if (stack.isEmpty() || left.isEmpty() || right.isEmpty()) return;
+        if (stack.isEmpty() || left.isEmpty()) return;
+
+        // Salvage: leveled gear alone, result is a stack of Ascension Cores
+        if (right.isEmpty()) {
+            if (AscensionCoresConfig.enableSalvage && GearHelper.isGear(left)
+                    && GearHelper.getLevel(left) > 0 && stack.is(ModItems.ASCENSION_CORE)) {
+                playFeedback(player, "Salvaged: " + stack.getCount() + " Cores", 2);
+            }
+            return;
+        }
 
         if (right.is(ModItems.ASCENSION_CORE) && GearHelper.isGear(left)) {
             playFeedback(player, "Level " + GearHelper.getLevel(stack), GearHelper.getLevel(stack));

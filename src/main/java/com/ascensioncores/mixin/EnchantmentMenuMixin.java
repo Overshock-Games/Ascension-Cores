@@ -1,5 +1,6 @@
 package com.ascensioncores.mixin;
 
+import com.ascensioncores.AscensionCoresConfig;
 import com.ascensioncores.gear.GearHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.EnchantmentMenu;
@@ -24,6 +25,7 @@ public abstract class EnchantmentMenuMixin {
      */
     @Inject(method = "slotsChanged", at = @At("TAIL"))
     private void onSlotsChanged(Container container, CallbackInfo ci) {
+        if (!AscensionCoresConfig.enableEnchantmentSlots) return;
         ItemStack item = enchantSlots.getItem(0);
         if (!item.isEmpty() && GearHelper.isGear(item) && GearHelper.getLevel(item) == 0) {
             costs[0] = 0;

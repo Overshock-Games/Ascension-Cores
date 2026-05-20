@@ -6,7 +6,7 @@ Ascension Cores does the opposite: your diamond sword stays a diamond sword. But
 
 - 5 ascension tiers (*Honed* → *Divine*), each adds a trait slot + enchantment slot
 - 30+ traits across weapon, ranged, armor, tool pools
-- Trait donation, deterministic anvil rerolls, smithing-aware trait fill
+- Trait donation, gear salvage, deterministic anvil rerolls, smithing-aware trait fill
 - Vanilla-friendly: doesn't add gear, doesn't replace enchants, doesn't fight other mods
 
 ---
@@ -15,7 +15,7 @@ Ascension Cores does the opposite: your diamond sword stays a diamond sword. But
 
 ### Cores
 - **Ascension Core**: Use in an anvil to level up gear. Each level adds a trait + enchantment slot and powers up existing traits.
-- **Chaos Core**: Use in an anvil to reroll the weakest traits on leveled gear. Stack more cores to reroll more at once.
+- **Chaos Core**: Use in an anvil to reroll the weakest traits on leveled gear. Stack more cores to reroll more at once. Optional *Gamble Mode* (config) makes rerolls swingier — traits can roll above their normal max, or bust to the minimum.
 
 ![Ascension and Chaos cores](https://cdn.modrinth.com/data/cached_images/b774ebc3efc40c416fc25d93889a49b83b4335d4.png)
 
@@ -38,6 +38,9 @@ Traits are ordered by power: first trait scales 5x at L5, second 4x, etc. A god-
 
 ### Trait donation
 Combine two of the same item in an anvil to transfer a trait. Surgical alternative to chaos rerolling.
+
+### Salvage
+Place leveled gear alone in an anvil — no second item, no rename — to break it down and recover a portion of the Ascension Cores invested in it. Costs XP. Lets you move your investment to a better base item instead of stranding cores in old gear.
 
 ### Visual feedback
 Tier-colored inventory badges, equipped item particle auras, detailed tooltips with trait values + next-level preview + cost-to-level.
@@ -143,6 +146,9 @@ Every proc-based trait has its own particle effect and sound.
 - Mob/chest drop rates per tier
 - Per-pool trait blacklist
 - Inventory marker + anvil sound toggles
+- Enchantment slot system toggle
+- Gear salvage toggle + refund percentage
+- Chaos gamble mode toggle
 
 </details>
 

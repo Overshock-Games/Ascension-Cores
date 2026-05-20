@@ -23,6 +23,10 @@ public final class AscensionCoresConfig {
     public static int upgradeCoreCostLevel5 = 64;
     public static boolean showInventoryLevelMarkers = true;
     public static boolean playAnvilFeedback = true;
+    public static boolean enableEnchantmentSlots = true;
+    public static boolean enableSalvage = true;
+    public static double salvageRefundPercent = 0.5;
+    public static boolean chaosGambleMode = false;
     public static int upgradeXpCostLevel1 = 2;
     public static int upgradeXpCostLevel2 = 4;
     public static int upgradeXpCostLevel3 = 6;
@@ -79,6 +83,10 @@ public final class AscensionCoresConfig {
 
         showInventoryLevelMarkers = parseBoolean(props, "showInventoryLevelMarkers", showInventoryLevelMarkers, logger);
         playAnvilFeedback = parseBoolean(props, "playAnvilFeedback", playAnvilFeedback, logger);
+        enableEnchantmentSlots = parseBoolean(props, "enableEnchantmentSlots", enableEnchantmentSlots, logger);
+        enableSalvage = parseBoolean(props, "enableSalvage", enableSalvage, logger);
+        salvageRefundPercent = parseDouble(props, "salvageRefundPercent", salvageRefundPercent, 0.0, 1.0, logger);
+        chaosGambleMode = parseBoolean(props, "chaosGambleMode", chaosGambleMode, logger);
         upgradeXpCostLevel1 = parseInt(props, "upgradeXpCostLevel1", upgradeXpCostLevel1, 0, 1000, logger);
         upgradeXpCostLevel2 = parseInt(props, "upgradeXpCostLevel2", upgradeXpCostLevel2, 0, 1000, logger);
         upgradeXpCostLevel3 = parseInt(props, "upgradeXpCostLevel3", upgradeXpCostLevel3, 0, 1000, logger);
@@ -190,6 +198,23 @@ public final class AscensionCoresConfig {
                 showInventoryLevelMarkers=%s
                 # If true, anvil upgrade/reroll plays an audio cue on success.
                 playAnvilFeedback=%s
+                # If true, leveled gear has a per-level enchantment slot cap:
+                # gear can hold at most <ascension level> non-curse enchantments,
+                # and un-ascended gear cannot be enchanted at all. If false, the
+                # whole enchantment-slot system is off (vanilla enchanting, no
+                # slot tooltip line).
+                enableEnchantmentSlots=%s
+                # If true, placing leveled gear alone in an anvil (no second item,
+                # no rename) salvages it: the gear is consumed and a portion of the
+                # Ascension Cores invested is returned. Costs XP levels equal to
+                # the gear's ascension level.
+                enableSalvage=%s
+                # Fraction of total Ascension Cores spent that salvage returns (0.0-1.0).
+                salvageRefundPercent=%.2f
+                # If true, Chaos Core rerolls become a gamble: each rerolled trait
+                # has a chance to roll above its normal maximum, and an equal
+                # chance to bust to its minimum.
+                chaosGambleMode=%s
                 # XP levels charged by the anvil for each Ascension upgrade.
                 # Level 1 means L0->L1, Level 2 means L1->L2, etc.
                 upgradeXpCostLevel1=%d
@@ -276,6 +301,10 @@ public final class AscensionCoresConfig {
                     upgradeCoreCostLevel5,
                     showInventoryLevelMarkers,
                     playAnvilFeedback,
+                    enableEnchantmentSlots,
+                    enableSalvage,
+                    salvageRefundPercent,
+                    chaosGambleMode,
                     upgradeXpCostLevel1,
                     upgradeXpCostLevel2,
                     upgradeXpCostLevel3,

@@ -175,6 +175,16 @@ public final class StatPool {
 
     /** Rolls only from stats whose {@code minLevel <= currentLevel}. */
     public static RolledStat rollStat(List<RolledStat> existing, List<StatDef> pool, int currentLevel, Random random) {
+        return rollStat(existing, pool, currentLevel, random, false);
+    }
+
+    /**
+     * Rolls only from stats whose {@code minLevel <= currentLevel}.
+     * When {@code gamble} is true, each roll has a 25% chance to land above the
+     * stat's normal maximum (jackpot) and an equal chance to bust to its weakest value.
+     */
+    public static RolledStat rollStat(List<RolledStat> existing, List<StatDef> pool, int currentLevel,
+                                      Random random, boolean gamble) {
         Set<String> existingIds = existing.stream().map(RolledStat::id).collect(Collectors.toSet());
         List<StatDef> available = pool.stream()
             .filter(def -> !existingIds.contains(def.id()))
@@ -183,7 +193,25 @@ public final class StatPool {
         if (available.isEmpty()) return null;
 
         StatDef chosen = available.get(random.nextInt(available.size()));
-        double raw = chosen.minAmount() + random.nextDouble() * (chosen.maxAmount() - chosen.minAmount());
+        double span = chosen.maxAmount() - chosen.minAmount();
+        double raw;
+        if (gamble) {
+            // repair_discount is the lone stat where a more-negative value is better
+            boolean lowerIsBetter = chosen.id().equals("repair_discount");
+            double roll = random.nextDouble();
+            if (roll < 0.25) {
+                // bust — weakest extreme
+                raw = lowerIsBetter ? chosen.maxAmount() : chosen.minAmount();
+            } else if (roll < 0.50) {
+                // jackpot — past the strong extreme by up to 50% of the normal span
+                double over = random.nextDouble() * span * 0.5;
+                raw = lowerIsBetter ? chosen.minAmount() - over : chosen.maxAmount() + over;
+            } else {
+                raw = chosen.minAmount() + random.nextDouble() * span;
+            }
+        } else {
+            raw = chosen.minAmount() + random.nextDouble() * span;
+        }
         double amount = Math.round(raw * 100.0) / 100.0;
         return new RolledStat(chosen.id(), amount);
     }

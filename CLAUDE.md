@@ -10,6 +10,15 @@ Caveman speak. Short. No articles. Grunt. Skip filler. Apply same to thinking.
 - Run server: `.\gradlew.bat runServer` (eula at `run/eula.txt`)
 - Mod id: `ascensioncores`, root pkg `com.ascensioncores`, mixin pkg `com.ascensioncores.mixin`
 
+## Versioning
+- SemVer. Version lives in `gradle.properties` → `mod_version`. Prod = latest released.
+- When asked to "bump version": look at uncommitted diff since last release, pick bump level:
+  - MAJOR (`X.0.0`) — breaking. MC version jump, config key removed/renamed, save-data component format change, trait/item removed or renamed, anything that breaks existing worlds or configs.
+  - MINOR (`1.X.0`) — new backward-compatible feature. New trait, new mechanic, new config option, new mod integration.
+  - PATCH (`1.0.X`) — bug fix, balance tweak, text/tooltip change. No new feature, no new config key.
+- New config keys are additive (old configs still parse) → MINOR, not MAJOR.
+- One bump per release, not per change. If unsure minor vs patch, ask.
+
 ## MC 26 mapping
 - Pre-mapped Mojang names. NO mappings line in build.gradle. NO `loom.officialMojangMappings()`.
 - Access widener header: `accessWidener v2 official`. Set `loom { accessWidenerPath = file(...) }`.
