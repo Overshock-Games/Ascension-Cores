@@ -31,7 +31,7 @@ public final class EntityDeathHandler {
         int weapons = (entity.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() ? 0 : 1) + (entity.getItemBySlot(EquipmentSlot.OFFHAND).isEmpty() ? 0 : 1);
         int gearPieces = armorPieces + weapons;
         boolean betterVanillaMob = BetterVanillaMobsCompat.isEnhanced(entity);
-        int hmiotLevel = HostileMobsImproveCompat.getDifficultyLevel(serverLevel, source);
+        int hmiotLevel = HostileMobsImproveCompat.getDifficultyLevel(serverLevel, entity, source);
 
         if (gearPieces == 0 && !betterVanillaMob && hmiotLevel == 0) return;
 
