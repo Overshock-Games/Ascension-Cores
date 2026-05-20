@@ -119,6 +119,7 @@ Every proc-based trait has its own particle effect and sound.
 - [Progression Reborn](https://modrinth.com/mod/progression-reborn) — tier-aware material capacity.
 - [Artifacts](https://modrinth.com/mod/artifacts) — artifacts roll traits and contribute to procs.
 - [Better Vanilla Mobs](https://modrinth.com/mod/better-vanilla-mobs) — mob-tier-aware core drop rates.
+- [Hostile Mobs Improve Over Time](https://modrinth.com/datapack/hostile-mobs-improve-over-time) — core drop rates scale with the datapack's per-player difficulty score.
 - [Farmer's Delight Refabricated](https://modrinth.com/mod/farmers-delight-refabricated) — knives recognized as tools.
 - [More Delight](https://modrinth.com/mod/more-delight) — tools recognized.
 
@@ -144,6 +145,7 @@ Every proc-based trait has its own particle effect and sound.
 - Max item level (default 5)
 - XP + core costs per tier
 - Mob/chest drop rates per tier
+- Per-integration drop scaling (Better Vanilla Mobs, Hostile Mobs Improve Over Time)
 - Per-pool trait blacklist
 - Inventory marker + anvil sound toggles
 - Enchantment slot system toggle

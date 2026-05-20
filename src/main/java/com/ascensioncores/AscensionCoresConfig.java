@@ -59,6 +59,10 @@ public final class AscensionCoresConfig {
     public static double betterVanillaMobsChaosCoreDropChance = 0.01;
     public static double betterVanillaMobsChaosCoreDropChancePerStar = 0.01;
 
+    public static boolean enableHostileMobsImproveIntegration = true;
+    public static double hostileMobsImproveAscensionCoreChancePerLevel = 0.002;
+    public static double hostileMobsImproveChaosCoreChancePerLevel = 0.0005;
+
     private static final Path CONFIG_PATH = Path.of("config", "ascensioncores.properties");
 
     private AscensionCoresConfig() {}
@@ -120,6 +124,12 @@ public final class AscensionCoresConfig {
         betterVanillaMobsChaosCoreDropChance = parseDouble(props, "betterVanillaMobsChaosCoreDropChance", betterVanillaMobsChaosCoreDropChance, 0.0, 1.0, logger);
         betterVanillaMobsChaosCoreDropChancePerStar = parseDouble(props, "betterVanillaMobsChaosCoreDropChancePerStar",
             betterVanillaMobsChaosCoreDropChancePerStar, 0.0, 1.0, logger);
+
+        enableHostileMobsImproveIntegration = parseBoolean(props, "enableHostileMobsImproveIntegration", enableHostileMobsImproveIntegration, logger);
+        hostileMobsImproveAscensionCoreChancePerLevel = parseDouble(props, "hostileMobsImproveAscensionCoreChancePerLevel",
+            hostileMobsImproveAscensionCoreChancePerLevel, 0.0, 1.0, logger);
+        hostileMobsImproveChaosCoreChancePerLevel = parseDouble(props, "hostileMobsImproveChaosCoreChancePerLevel",
+            hostileMobsImproveChaosCoreChancePerLevel, 0.0, 1.0, logger);
 
         disabledWeaponTraits = parseStringSet(props, "disabledWeaponTraits", logger);
         disabledRangedTraits = parseStringSet(props, "disabledRangedTraits", logger);
@@ -292,6 +302,14 @@ public final class AscensionCoresConfig {
                 # Added to the Chaos Core chance for each BVM rarity star after the first.
                 # Default: 1-star 0.3%%, 2-star 0.6%%, 3-star 0.9%%, 4-star 1.2%%, 5-star/Alpha 1.5%%.
                 betterVanillaMobsChaosCoreDropChancePerStar=%.4f
+                # If true, integrates with the "Hostile Mobs Improve Over Time" datapack:
+                # core drop chance scales with the killer's HostileMobs difficulty score.
+                # No effect if the datapack isn't installed.
+                enableHostileMobsImproveIntegration=%s
+                # Ascension Core chance added per point of the killer's difficulty score.
+                hostileMobsImproveAscensionCoreChancePerLevel=%.4f
+                # Chaos Core chance added per point of the killer's difficulty score.
+                hostileMobsImproveChaosCoreChancePerLevel=%.4f
                 """.formatted(
                     maxLevel,
                     upgradeCoreCostLevel1,
@@ -331,7 +349,10 @@ public final class AscensionCoresConfig {
                     betterVanillaMobsAscensionCoreDropChance,
                     betterVanillaMobsAscensionCoreDropChancePerStar,
                     betterVanillaMobsChaosCoreDropChance,
-                    betterVanillaMobsChaosCoreDropChancePerStar
+                    betterVanillaMobsChaosCoreDropChancePerStar,
+                    enableHostileMobsImproveIntegration,
+                    hostileMobsImproveAscensionCoreChancePerLevel,
+                    hostileMobsImproveChaosCoreChancePerLevel
                 );
     }
 

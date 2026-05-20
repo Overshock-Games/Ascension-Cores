@@ -2,6 +2,7 @@ package com.ascensioncores.event;
 
 import com.ascensioncores.AscensionCoresConfig;
 import com.ascensioncores.compat.BetterVanillaMobsCompat;
+import com.ascensioncores.compat.HostileMobsImproveCompat;
 import com.ascensioncores.item.ModItems;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.server.level.ServerLevel;
@@ -30,8 +31,9 @@ public final class EntityDeathHandler {
         int weapons = (entity.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() ? 0 : 1) + (entity.getItemBySlot(EquipmentSlot.OFFHAND).isEmpty() ? 0 : 1);
         int gearPieces = armorPieces + weapons;
         boolean betterVanillaMob = BetterVanillaMobsCompat.isEnhanced(entity);
+        int hmiotLevel = HostileMobsImproveCompat.getDifficultyLevel(serverLevel, source);
 
-        if (gearPieces == 0 && !betterVanillaMob) return;
+        if (gearPieces == 0 && !betterVanillaMob && hmiotLevel == 0) return;
 
         RandomSource rng = entity.level().getRandom();
 
@@ -42,6 +44,9 @@ public final class EntityDeathHandler {
         } else if (gearPieces > 0) {
             upgradeChance = AscensionCoresConfig.mobAscensionCoreDropChancePerEquipment * gearPieces;
         }
+        // Additive bonus scaling with the killer's HostileMobs difficulty score
+        upgradeChance = Math.min(1.0, upgradeChance
+            + hmiotLevel * AscensionCoresConfig.hostileMobsImproveAscensionCoreChancePerLevel);
         if (rng.nextDouble() < upgradeChance) {
             int range = AscensionCoresConfig.mobAscensionCoreMaxDrop - AscensionCoresConfig.mobAscensionCoreMinDrop + 1;
             int count = AscensionCoresConfig.mobAscensionCoreMinDrop + rng.nextInt(range);
@@ -51,6 +56,8 @@ public final class EntityDeathHandler {
         double chaosChance = betterVanillaMob
             ? BetterVanillaMobsCompat.getChaosCoreDropChance(entity)
             : AscensionCoresConfig.mobChaosCoreDropChance;
+        chaosChance = Math.min(1.0, chaosChance
+            + hmiotLevel * AscensionCoresConfig.hostileMobsImproveChaosCoreChancePerLevel);
         if (rng.nextDouble() < chaosChance) {
             entity.spawnAtLocation(serverLevel, new ItemStack(ModItems.CHAOS_CORE, 1));
         }
