@@ -3,6 +3,7 @@ package com.ascensioncores.event;
 import com.ascensioncores.AscensionCoresConfig;
 import com.ascensioncores.compat.BetterVanillaMobsCompat;
 import com.ascensioncores.compat.HostileMobsImproveCompat;
+import com.ascensioncores.compat.WarbandCompat;
 import com.ascensioncores.item.ModItems;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.server.level.ServerLevel;
@@ -32,8 +33,9 @@ public final class EntityDeathHandler {
         int gearPieces = armorPieces + weapons;
         boolean betterVanillaMob = BetterVanillaMobsCompat.isEnhanced(entity);
         int hmiotLevel = HostileMobsImproveCompat.getDifficultyLevel(serverLevel, entity, source);
+        WarbandCompat.Contribution warband = WarbandCompat.contribution(entity);
 
-        if (gearPieces == 0 && !betterVanillaMob && hmiotLevel == 0) return;
+        if (gearPieces == 0 && !betterVanillaMob && hmiotLevel == 0 && !warband.active()) return;
 
         RandomSource rng = entity.level().getRandom();
 
@@ -47,6 +49,13 @@ public final class EntityDeathHandler {
         // Additive bonus scaling with the killer's HostileMobs difficulty score
         upgradeChance = Math.min(1.0, upgradeChance
             + hmiotLevel * AscensionCoresConfig.hostileMobsImproveAscensionCoreChancePerLevel);
+        if (warband.active()) {
+            double difficulty = warband.difficulty();
+            upgradeChance = Math.min(1.0, upgradeChance
+                + AscensionCoresConfig.warbandAscensionCoreBaseChance
+                + difficulty * difficulty * AscensionCoresConfig.warbandAscensionCoreDifficultyChance
+                + (warband.squadded() ? AscensionCoresConfig.warbandSquadRoleAscensionCoreBonus : 0.0));
+        }
         if (rng.nextDouble() < upgradeChance) {
             int range = AscensionCoresConfig.mobAscensionCoreMaxDrop - AscensionCoresConfig.mobAscensionCoreMinDrop + 1;
             int count = AscensionCoresConfig.mobAscensionCoreMinDrop + rng.nextInt(range);
@@ -58,6 +67,11 @@ public final class EntityDeathHandler {
             : AscensionCoresConfig.mobChaosCoreDropChance;
         chaosChance = Math.min(1.0, chaosChance
             + hmiotLevel * AscensionCoresConfig.hostileMobsImproveChaosCoreChancePerLevel);
+        if (warband.active() && warband.leader()) {
+            double difficulty = warband.difficulty();
+            chaosChance = Math.min(1.0, chaosChance
+                + difficulty * difficulty * difficulty * AscensionCoresConfig.warbandChaosCoreDifficultyChance);
+        }
         if (rng.nextDouble() < chaosChance) {
             entity.spawnAtLocation(serverLevel, new ItemStack(ModItems.CHAOS_CORE, 1));
         }

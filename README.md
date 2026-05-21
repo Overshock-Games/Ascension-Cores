@@ -50,9 +50,9 @@ Tier-colored inventory badges, equipped item particle auras, detailed tooltips w
 ## How to get cores
 
 - **Crafting**: Both Ascension and Chaos Cores have crafting recipes (see in-game JEI / wiki).
-- **Mob drops**: Hostile mobs drop cores at tiered rates, basic mobs, mid-tier mobs (wither skeletons, blazes), and bosses each in their own bracket.
-- **Chest loot**: Generates in dungeon, fortress, mineshaft, end city, and ancient city chests.
-- **Pre-ascended loot** (optional): Vanilla dungeon weapons can spawn already leveled, ready to use.
+- **Mob drops**: Hostile mobs can drop cores based on carried equipment, with optional scaling from supported difficulty mods/datapacks.
+- **Chest loot**: Generates in dungeons, mineshafts, strongholds, temples, shipwrecks, villages, trial chambers, end cities, bastion treasure, and ancient cities.
+- **Pre-ascended loot** (optional): Looted gear can spawn already leveled, ready to use.
 
 All drop rates and weights configurable in `config/ascensioncores.properties`.
 
@@ -119,7 +119,8 @@ Every proc-based trait has its own particle effect and sound.
 - [Progression Reborn](https://modrinth.com/mod/progression-reborn) — tier-aware material capacity.
 - [Artifacts](https://modrinth.com/mod/artifacts) — artifacts roll traits and contribute to procs.
 - [Better Vanilla Mobs](https://modrinth.com/mod/better-vanilla-mobs) — mob-tier-aware core drop rates.
-- [Hostile Mobs Improve Over Time](https://modrinth.com/datapack/hostile-mobs-improve-over-time) — core drop rates scale with the datapack's per-player difficulty score.
+- [Hostile Mobs Improve Over Time](https://modrinth.com/datapack/hostile-mobs-improve-over-time) — core drop rates scale for mobs actually improved by the datapack.
+- Warband — Warband-stamped mobs add core drop chance based on mob difficulty, squad membership, and leader status. Farm-suppressed Warband mobs are excluded.
 - [Farmer's Delight Refabricated](https://modrinth.com/mod/farmers-delight-refabricated) — knives recognized as tools.
 - [More Delight](https://modrinth.com/mod/more-delight) — tools recognized.
 
@@ -135,7 +136,12 @@ Every proc-based trait has its own particle effect and sound.
 ## Commands & config
 
 - `/ascensioncores reload` — hot-reload config.
-- `/ascensioncores level <amount>` — set held item's level (OP).
+- `/ascensioncores level get` — show held item's ascension level.
+- `/ascensioncores level set <level>` — set held item's ascension level.
+- `/ascensioncores info` — list valid traits for the held item pool.
+- `/ascensioncores reroll` — reroll all traits on the held item.
+- `/ascensioncores trait set <id> [amount]` — force a trait onto the held item.
+- `/ascensioncores givecore upgrade <count>` / `/ascensioncores givecore chaos <count>` — give cores.
 
 <details>
 <summary><b>Config options (click to expand)</b></summary>
@@ -145,7 +151,7 @@ Every proc-based trait has its own particle effect and sound.
 - Max item level (default 5)
 - XP + core costs per tier
 - Mob/chest drop rates per tier
-- Per-integration drop scaling (Better Vanilla Mobs, Hostile Mobs Improve Over Time)
+- Per-integration drop scaling (Better Vanilla Mobs, Hostile Mobs Improve Over Time, Warband)
 - Per-pool trait blacklist
 - Inventory marker + anvil sound toggles
 - Enchantment slot system toggle

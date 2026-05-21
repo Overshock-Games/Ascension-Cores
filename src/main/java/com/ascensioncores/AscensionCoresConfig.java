@@ -62,6 +62,12 @@ public final class AscensionCoresConfig {
     public static boolean enableHostileMobsImproveIntegration = true;
     public static double hostileMobsImproveAscensionCoreChancePerLevel = 0.002;
     public static double hostileMobsImproveChaosCoreChancePerLevel = 0.0005;
+    public static boolean enableWarbandIntegration = true;
+    public static double warbandMinimumDifficulty = 0.45;
+    public static double warbandAscensionCoreBaseChance = 0.002;
+    public static double warbandAscensionCoreDifficultyChance = 0.018;
+    public static double warbandSquadRoleAscensionCoreBonus = 0.004;
+    public static double warbandChaosCoreDifficultyChance = 0.0025;
 
     private static final Path CONFIG_PATH = Path.of("config", "ascensioncores.properties");
 
@@ -130,6 +136,15 @@ public final class AscensionCoresConfig {
             hostileMobsImproveAscensionCoreChancePerLevel, 0.0, 1.0, logger);
         hostileMobsImproveChaosCoreChancePerLevel = parseDouble(props, "hostileMobsImproveChaosCoreChancePerLevel",
             hostileMobsImproveChaosCoreChancePerLevel, 0.0, 1.0, logger);
+        enableWarbandIntegration = parseBoolean(props, "enableWarbandIntegration", enableWarbandIntegration, logger);
+        warbandMinimumDifficulty = parseDouble(props, "warbandMinimumDifficulty", warbandMinimumDifficulty, 0.0, 1.0, logger);
+        warbandAscensionCoreBaseChance = parseDouble(props, "warbandAscensionCoreBaseChance", warbandAscensionCoreBaseChance, 0.0, 1.0, logger);
+        warbandAscensionCoreDifficultyChance = parseDouble(props, "warbandAscensionCoreDifficultyChance",
+            warbandAscensionCoreDifficultyChance, 0.0, 1.0, logger);
+        warbandSquadRoleAscensionCoreBonus = parseDouble(props, "warbandSquadRoleAscensionCoreBonus",
+            warbandSquadRoleAscensionCoreBonus, 0.0, 1.0, logger);
+        warbandChaosCoreDifficultyChance = parseDouble(props, "warbandChaosCoreDifficultyChance",
+            warbandChaosCoreDifficultyChance, 0.0, 1.0, logger);
 
         disabledWeaponTraits = parseStringSet(props, "disabledWeaponTraits", logger);
         disabledRangedTraits = parseStringSet(props, "disabledRangedTraits", logger);
@@ -310,6 +325,19 @@ public final class AscensionCoresConfig {
                 hostileMobsImproveAscensionCoreChancePerLevel=%.4f
                 # Chaos Core chance added per point of the killer's difficulty score.
                 hostileMobsImproveChaosCoreChancePerLevel=%.4f
+                # If true, Warband-stamped mobs add core drop chance based on
+                # Warband difficulty, squad roles, and leaders. Farm-suppressed
+                # Warband mobs never receive this bonus.
+                enableWarbandIntegration=%s
+                # Minimum Warband mob difficulty before core-drop scaling applies.
+                warbandMinimumDifficulty=%.4f
+                # Ascension Core chance = base + difficulty^2 * difficultyChance,
+                # plus squad role bonus if the mob belongs to a Warband squad.
+                warbandAscensionCoreBaseChance=%.4f
+                warbandAscensionCoreDifficultyChance=%.4f
+                warbandSquadRoleAscensionCoreBonus=%.4f
+                # Chaos Core chance = difficulty^3 * this value, leaders only.
+                warbandChaosCoreDifficultyChance=%.4f
                 """.formatted(
                     maxLevel,
                     upgradeCoreCostLevel1,
@@ -352,7 +380,13 @@ public final class AscensionCoresConfig {
                     betterVanillaMobsChaosCoreDropChancePerStar,
                     enableHostileMobsImproveIntegration,
                     hostileMobsImproveAscensionCoreChancePerLevel,
-                    hostileMobsImproveChaosCoreChancePerLevel
+                    hostileMobsImproveChaosCoreChancePerLevel,
+                    enableWarbandIntegration,
+                    warbandMinimumDifficulty,
+                    warbandAscensionCoreBaseChance,
+                    warbandAscensionCoreDifficultyChance,
+                    warbandSquadRoleAscensionCoreBonus,
+                    warbandChaosCoreDifficultyChance
                 );
     }
 

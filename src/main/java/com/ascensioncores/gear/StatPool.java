@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class StatPool {
+    private static final AttributeModifier.Operation PERCENT_OPERATION = AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
 
     /**
      * @param minAmount  lower bound of the per-multiplier random roll
@@ -76,17 +77,17 @@ public final class StatPool {
             new StatDef("attack_speed",         Attributes.ATTACK_SPEED,                0.05, 0.15, "Attack Speed",         " pts"),
             new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.20, 0.70, "Armor Shred",          " pts"),
             new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.10, 0.35, "Toughness Shred",      " pts"),
-            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
+            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%", PERCENT_OPERATION),
             new StatDef("critical_damage",      null,                                   0.10, 0.25, "Critical Damage",      "%"),
             new StatDef("execution_damage",     null,                                   0.08, 0.18, "Execution Damage",     "%"),
             new StatDef("ambush_damage",        null,                                   0.08, 0.18, "Ambush Damage",        "%"),
             new StatDef("frostbite",            null,                                   0.03, 0.10, "Frostbite",            "%"),
             new StatDef("venom",                null,                                   0.03, 0.10, "Venom",                "%"),
             new StatDef("shock",                null,                                   0.03, 0.10, "Shock",                "%"),
-            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", PERCENT_OPERATION),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.30, 1.00, "Stealth",              " blk"),
-            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
+            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", PERCENT_OPERATION),
+            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%", PERCENT_OPERATION),
             new StatDef("opening_damage",       null,                                   0.05, 0.10, "Opening Damage",       "%"),
             new StatDef("wither",               null,                                   0.03, 0.08, "Wither",               "%"),
             new StatDef("chain_damage",         null,                                   0.01, 0.03, "Chain Damage",         "%"),
@@ -102,16 +103,16 @@ public final class StatPool {
             new StatDef("life_steal",           PuffishAttributes.LIFE_STEAL,           0.02, 0.06, "Life Steal",           "%"),
             new StatDef("armor_shred",          PuffishAttributes.ARMOR_SHRED,          0.20, 0.70, "Armor Shred",          " pts"),
             new StatDef("toughness_shred",      PuffishAttributes.TOUGHNESS_SHRED,      0.10, 0.35, "Toughness Shred",      " pts"),
-            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
+            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%", PERCENT_OPERATION),
             new StatDef("critical_damage",      null,                                   0.10, 0.25, "Critical Damage",      "%"),
             new StatDef("execution_damage",     null,                                   0.08, 0.18, "Execution Damage",     "%"),
             new StatDef("ambush_damage",        null,                                   0.08, 0.18, "Ambush Damage",        "%"),
             new StatDef("venom",                null,                                   0.03, 0.10, "Venom",                "%"),
             new StatDef("shock",                null,                                   0.03, 0.10, "Shock",                "%"),
-            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", PERCENT_OPERATION),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.30, 1.00, "Stealth",              " blk"),
-            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
+            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", PERCENT_OPERATION),
+            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%", PERCENT_OPERATION),
             new StatDef("opening_damage",       null,                                   0.05, 0.10, "Opening Damage",       "%"),
             new StatDef("wither",               null,                                   0.03, 0.08, "Wither",               "%"),
             new StatDef("heal_suppress",        null,                                   0.03, 0.08, "Heal Suppress",        "%"),
@@ -127,17 +128,17 @@ public final class StatPool {
             new StatDef("deflection",           null,                                   0.01, 0.04, "Deflection",           "%"),
             new StatDef("effect_resist",        null,                                   0.04, 0.10, "Effect Resist",        "%"),
             new StatDef("melee_resistance",     null,                                   0.02, 0.06, "Melee Resistance",     "%"),
-            new StatDef("natural_regeneration", PuffishAttributes.NATURAL_REGENERATION, 0.05, 0.20, "Natural Regeneration", "%"),
+            new StatDef("natural_regeneration", PuffishAttributes.NATURAL_REGENERATION, 0.05, 0.20, "Natural Regeneration", "%", PERCENT_OPERATION),
             new StatDef("low_health_guard",     null,                                   0.05, 0.12, "Low Health Guard",     "%"),
             new StatDef("sneak_guard",          null,                                   0.04, 0.10, "Sneak Guard",          "%"),
-            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-            new StatDef("consuming_speed",      PuffishAttributes.CONSUMING_SPEED,      0.03, 0.10, "Consuming Speed",      "%"),
-            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
+            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", PERCENT_OPERATION),
+            new StatDef("consuming_speed",      PuffishAttributes.CONSUMING_SPEED,      0.03, 0.10, "Consuming Speed",      "%", PERCENT_OPERATION),
+            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%", PERCENT_OPERATION),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.30, 1.00, "Stealth",              " blk"),
             new StatDef("tamed_resistance",     PuffishAttributes.TAMED_RESISTANCE,     0.10, 0.30, "Tamed Resistance",     " DMG"),
             new StatDef("stamina",              PuffishAttributes.STAMINA,              0.20, 0.60, "Stamina",              " pts"),
-            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
-            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%", PERCENT_OPERATION),
+            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", PERCENT_OPERATION),
             new StatDef("emergency_healing",    null,                                   0.02, 0.05, "Emergency Healing",    "%"),
             new StatDef("standstill_guard",     null,                                   0.05, 0.15, "Standstill Guard",     "%"),
             new StatDef("max_health",           Attributes.MAX_HEALTH,                  0.20, 0.60, "Max Health",           " HP")
@@ -147,13 +148,13 @@ public final class StatPool {
 
     private static List<StatDef> createToolPool() {
         List<StatDef> pool = new ArrayList<>(List.of(
-            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%"),
-            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%"),
-            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-            new StatDef("natural_regeneration", PuffishAttributes.NATURAL_REGENERATION, 0.05, 0.20, "Natural Regeneration", "%"),
+            new StatDef("experience_bonus",     PuffishAttributes.EXPERIENCE,           0.05, 0.20, "Experience Bonus",     "%", PERCENT_OPERATION),
+            new StatDef("repair_discount",      PuffishAttributes.REPAIR_COST,         -0.15,-0.05, "Repair Discount",      "%", PERCENT_OPERATION),
+            new StatDef("jump",                 PuffishAttributes.JUMP,                 0.05, 0.20, "Jump Height",          "%", PERCENT_OPERATION),
+            new StatDef("natural_regeneration", PuffishAttributes.NATURAL_REGENERATION, 0.05, 0.20, "Natural Regeneration", "%", PERCENT_OPERATION),
             new StatDef("stamina",              PuffishAttributes.STAMINA,              0.20, 0.60, "Stamina",              " pts"),
             new StatDef("stealth",              PuffishAttributes.STEALTH,              0.30, 1.00, "Stealth",              " blk"),
-            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            new StatDef("sprinting_speed",      PuffishAttributes.SPRINTING_SPEED,      0.03, 0.10, "Sprint Speed",         "%", PERCENT_OPERATION)
         ));
         return List.copyOf(pool);
     }

@@ -250,6 +250,36 @@ public final class GearHelper {
             display.withHidden(DataComponents.ATTRIBUTE_MODIFIERS, false));
     }
 
+    public static void rebuildAttributesIfOutdated(ItemStack stack) {
+        int level = getLevel(stack);
+        if (level <= 0) return;
+
+        List<RolledStat> stats = getRolledStats(stack);
+        for (int i = 0; i < stats.size(); i++) {
+            RolledStat rolled = stats.get(i);
+            StatPool.StatDef def = StatPool.getById(rolled.id());
+            if (def == null || def.attribute() == null) continue;
+
+            Identifier expectedId = Identifier.fromNamespaceAndPath("ascensioncores", "stat_" + def.id() + "_" + i);
+            if (!hasAscensionModifier(stack, expectedId, def.operation())) {
+                rebuildAttributes(stack, level, stats);
+                return;
+            }
+        }
+    }
+
+    private static boolean hasAscensionModifier(ItemStack stack, Identifier id, AttributeModifier.Operation operation) {
+        ItemAttributeModifiers modifiers = stack.getOrDefault(
+            DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+        for (ItemAttributeModifiers.Entry entry : modifiers.modifiers()) {
+            AttributeModifier modifier = entry.modifier();
+            if (modifier.id().equals(id) && modifier.operation() == operation) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static void addNonAscensionModifiers(
             ItemAttributeModifiers.Builder builder,
             ItemAttributeModifiers modifiers,
