@@ -7,6 +7,7 @@ Ascendant Armory does the opposite: your diamond sword stays a diamond sword. Bu
 - 5 ascension tiers (*Honed* → *Divine*), each adds a trait slot + enchantment slot
 - 30+ traits across weapon, ranged, armor, tool pools, with synergy pairs and high-risk curses
 - Trait donation, gear salvage, deterministic anvil rerolls, smithing-aware trait fill
+- Vanilla advancement tree + per-item kill tracking on every leveled weapon
 - Vanilla-friendly: doesn't add gear, doesn't replace enchants, doesn't fight other mods
 
 ![Ascension and Chaos cores](https://cdn.modrinth.com/data/cached_images/b774ebc3efc40c416fc25d93889a49b83b4335d4.png)
@@ -20,6 +21,10 @@ The wiki covers everything: every trait and pool, the anvil mechanics (level-up,
 
 - Fabric API
 - [Pufferfish's Attributes](https://modrinth.com/mod/attributes)
+
+## Tip
+
+Pairs beautifully with [Particle Effects](https://modrinth.com/mod/particle-effects) — a client-only mod that punches up vanilla particle visuals. Ascendant Armory uses particles heavily for trait procs and tier auras; Particle Effects makes them look great. No server install needed, no gameplay impact.
 
 ## License
 

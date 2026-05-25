@@ -14,7 +14,8 @@
 ### Changed
 - Reworked the naturally-leveled loot tier formula to a truncated geometric distribution. Consecutive tiers now have a clean constant ratio — fixes the old catch-all where Divine piled up against Mythic and never felt meaningfully rarer.
 - Default per-loot-drop distributions (including the chance an item rolls un-leveled at all): normal loot L0 60% / L1 26.1% / L2 9.2% / L3 3.2% / L4 1.1% / L5 0.4%; treasure loot L0 40% / L1 31.0% / L2 15.5% / L3 7.7% / L4 3.9% / L5 1.9%.
-- **Removed Deflection trait.** Its projectile-reflection niche was too narrow and overlapped with Evasion (which already negates any damage source including projectiles). Existing items with Deflection rolled will keep the slot but the trait becomes inert until rerolled; salvage the item if you want a clean re-roll. Evasion's wording in the wiki is clarified to make its any-source coverage explicit.
+- **Removed Deflection trait.** Its projectile-reflection niche was too narrow and overlapped with Evasion (which already negates any damage source including projectiles). Existing items with Deflection are auto-repaired by the new trait-gap repair (see below) when the player's inventory is loaded. Evasion's wording in the wiki is clarified to make its any-source coverage explicit.
+- **Auto-repair for trait gaps.** When a player joins, carried leveled gear is checked once: trait IDs that no longer exist (because a trait was removed in an update) are dropped, and any resulting empty slots are refilled with fresh rolls from the appropriate pool. Players never silently lose value when a mod update prunes the trait list.
 - Removed the per-trait next-level preview and the "Cost to Level" footer from item tooltips entirely. The anvil's result slot already shows the exact post-upgrade item when you put an Ascension Core in the right slot, so the inventory-tooltip preview was redundant noise. Much cleaner tooltips.
 
 ## 1.3.0

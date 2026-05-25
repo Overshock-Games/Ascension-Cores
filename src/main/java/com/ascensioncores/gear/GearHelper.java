@@ -277,6 +277,35 @@ public final class GearHelper {
             display.withHidden(DataComponents.ATTRIBUTE_MODIFIERS, false));
     }
 
+    /**
+     * Auto-repair the rolled-stat list: drops trait IDs no longer in any pool (e.g.,
+     * traits removed in a mod update), then refills any empty slots up to the item's
+     * unlocked trait count. Intended for migration-time scans, such as when a
+     * player inventory is loaded after a mod update.
+     */
+    public static boolean repairTraitGaps(ItemStack stack) {
+        if (!isGear(stack) || !hasAscensionData(stack)) return false;
+        int level = getLevel(stack);
+        if (level <= 0) return false;
+
+        List<RolledStat> stats = new ArrayList<>(getRolledStats(stack));
+        boolean changed = stats.removeIf(s -> StatPool.getById(s.id()) == null);
+
+        int expected = Math.min(level, getMaterialCapacity(stack));
+        while (stats.size() < expected) {
+            RolledStat rolled = StatPool.rollStat(stats, getPool(stack), level);
+            if (rolled == null) break;
+            stats.add(rolled);
+            changed = true;
+        }
+
+        if (changed) {
+            stack.set(ModComponents.ROLLED_STATS, stats);
+            rebuildAttributes(stack, level, stats);
+        }
+        return changed;
+    }
+
     public static void rebuildAttributesIfOutdated(ItemStack stack) {
         int level = getLevel(stack);
         if (level <= 0) return;
